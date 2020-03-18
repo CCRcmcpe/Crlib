@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using REVUnit.Crlib.WindowsOnly;
 
 namespace REVUnit.Crlib.Extension
@@ -9,23 +11,26 @@ namespace REVUnit.Crlib.Extension
     {
         static XConsole()
         {
-            Native.SetConsoleCtrlHandler(delegate(int sig)
+            if (!Native.SetConsoleCtrlHandler(ctrlType =>
             {
-                if (sig != Native.CTRL_BREAK_EVENT) ConsoleExit?.Invoke();
-                return false;
-            }, false);
+                Exiting?.Invoke();
+                return true;
+            }, true))
+            {
+                throw new Exception("Unable to set ConsoleCtrlHandler");
+            }
         }
 
-        public static IntPtr Handle => Native.GetConsoleWindow();
+        public static IntPtr WindowHandle => Native.GetConsoleWindow();
 
         public static int[] ReadInts()
         {
-            return Console.ReadLine().Trim().Split(' ').Select(int.Parse).ToArray();
+            return Console.ReadLine()?.Trim().Split(' ').Select(int.Parse).ToArray();
         }
 
         public static double[] ReadDoubles()
         {
-            return Console.ReadLine().Trim().Split(' ').Select(double.Parse).ToArray();
+            return Console.ReadLine()?.Trim().Split(' ').Select(double.Parse).ToArray();
         }
 
         public static void AnyKey(string message)
@@ -78,48 +83,11 @@ namespace REVUnit.Crlib.Extension
             Console.WriteLine(texts[num]);
         }
 
-        private static void Backspace()
+        public static void Backspace()
         {
             Console.Write("\b\0\b");
         }
 
-        public static T ReadLine<T>(Func<string, T> parser)
-        {
-            var stack = new Stack<char>();
-            while (true)
-            {
-                ConsoleKeyInfo consoleKeyInfo = Console.ReadKey(true);
-                char keyChar = consoleKeyInfo.KeyChar;
-                if (!char.IsControl(keyChar))
-                {
-                    stack.Push(keyChar);
-                    try
-                    {
-                        parser(new string(stack.Reverse().ToArray()));
-                        Console.Write(keyChar);
-                    }
-                    catch (FormatException)
-                    {
-                        stack.Pop();
-                    }
-                }
-                else
-                {
-                    if (consoleKeyInfo.Key == ConsoleKey.Enter) break;
-                    if (consoleKeyInfo.Key == ConsoleKey.Backspace && stack.Count > 0)
-                    {
-                        stack.Pop();
-                        Backspace();
-                    }
-                }
-            }
-
-            Console.WriteLine();
-            return parser(new string(stack.Reverse().ToArray()));
-        }
-
-        public static event Action ConsoleExit;
-
-        internal delegate bool ConsoleExitHandler(int sig);
+        public static event Action Exiting;
     }
 }

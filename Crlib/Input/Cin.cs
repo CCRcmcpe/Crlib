@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -75,6 +76,41 @@ namespace REVUnit.Crlib.Input
             }
 
             return result;
+        }
+
+        public static T Get<T>(Func<string, T> parser)
+        {
+            var stack = new Stack<char>();
+            while (true)
+            {
+                ConsoleKeyInfo consoleKeyInfo = Console.ReadKey(true);
+                char keyChar = consoleKeyInfo.KeyChar;
+                if (!char.IsControl(keyChar))
+                {
+                    stack.Push(keyChar);
+                    try
+                    {
+                        parser(new string(stack.Reverse().ToArray()));
+                        Console.Write(keyChar);
+                    }
+                    catch (FormatException)
+                    {
+                        stack.Pop();
+                    }
+                }
+                else
+                {
+                    if (consoleKeyInfo.Key == ConsoleKey.Enter) break;
+                    if (consoleKeyInfo.Key == ConsoleKey.Backspace && stack.Count > 0)
+                    {
+                        stack.Pop();
+                        XConsole.Backspace();
+                    }
+                }
+            }
+
+            Console.WriteLine();
+            return parser(new string(stack.Reverse().ToArray()));
         }
 
         public bool NextToken()

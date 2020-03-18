@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
+using System.Windows;
 using REVUnit.Crlib.Extension;
 using REVUnit.Crlib.Input;
 
@@ -14,8 +16,13 @@ namespace REVUnit.Crlib.ManualTest
         }
         public static void Main()
         {
-            Console.WriteLine(X.HappensProbabilityS(0.02f) ? "oh shit" : "kokodayo");
+            XConsole.Exiting += () =>
+            {
+                "Disposing".Cl();
+            };
+            Console.ReadKey(true);
             return;
+            Console.WriteLine(X.HappensProbabilityS(0.02f) ? "oh shit" : "kokodayo");
             var cin = new Cin();
             MethodInfo method = typeof(Cin).GetMethod("Get");
             while (true)
