@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using REVUnit.Crlib.WindowsOnly;
 
 namespace REVUnit.Crlib.Extension
@@ -16,9 +13,7 @@ namespace REVUnit.Crlib.Extension
                 Exiting?.Invoke();
                 return true;
             }, true))
-            {
                 throw new Exception("Unable to set ConsoleCtrlHandler");
-            }
         }
 
         public static IntPtr WindowHandle => Native.GetConsoleWindow();

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -7,6 +6,7 @@ using System.Windows.Forms;
 namespace REVUnit.Crlib.WindowsOnly
 {
     public delegate bool ConsoleCtrlHandler(uint ctrlType);
+
     internal static class Native
     {
         public const int WmHotkey = 786;

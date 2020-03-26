@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows;
 using REVUnit.Crlib.Extension;
 using REVUnit.Crlib.Input;
 
@@ -12,14 +9,14 @@ namespace REVUnit.Crlib.ManualTest
     {
         public enum 圣经
         {
-            我带你们打, 发把狙, A1高闪来一个
+            我带你们打,
+            发把狙,
+            A1高闪来一个
         }
+
         public static void Main()
         {
-            XConsole.Exiting += () =>
-            {
-                "Disposing".Cl();
-            };
+            XConsole.Exiting += () => { "Disposing".Cl(); };
             Console.ReadKey(true);
             return;
             Console.WriteLine(X.HappensProbabilityS(0.02f) ? "oh shit" : "kokodayo");
