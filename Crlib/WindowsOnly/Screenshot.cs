@@ -10,7 +10,7 @@ namespace REVUnit.Crlib.WindowsOnly
         public static Rectangle GetWindowRealSize(IntPtr handle)
         {
             Native.DwmGetWindowAttribute(handle, 9, out Native.Rect r, Marshal.SizeOf<Native.Rect>());
-            return r;
+            return new Rectangle(r.X, r.Y, r.Width, r.Height);
         }
 
         public static Bitmap Take(IntPtr windowHandle)

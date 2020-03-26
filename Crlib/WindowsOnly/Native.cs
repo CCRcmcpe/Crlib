@@ -77,65 +77,9 @@ namespace REVUnit.Crlib.WindowsOnly
                 set => Right = value + Left;
             }
 
-            internal Point Location
-            {
-                get => new Point(Left, Top);
-                set
-                {
-                    X = value.X;
-                    Y = value.Y;
-                }
-            }
-
-            internal Size Size
-            {
-                get => new Size(Width, Height);
-                set
-                {
-                    Width = value.Width;
-                    Height = value.Height;
-                }
-            }
-
-            public static Rect operator -(Rect a, Rect b)
-            {
-                return new Rect(a.Left - b.Left, a.Top - b.Top, a.Right - b.Right, a.Bottom - b.Bottom);
-            }
-
-            public static implicit operator Rectangle(Rect r)
-            {
-                return new Rectangle(r.Left, r.Top, r.Width, r.Height);
-            }
-
-            public static implicit operator Rect(Rectangle r)
-            {
-                return new Rect(r);
-            }
-
-            public static bool operator ==(Rect r1, Rect r2)
-            {
-                return r1.Equals(r2);
-            }
-
-            public static bool operator !=(Rect r1, Rect r2)
-            {
-                return !r1.Equals(r2);
-            }
-
             public bool Equals(Rect r)
             {
                 return r.Left == Left && r.Top == Top && r.Right == Right && r.Bottom == Bottom;
-            }
-
-            public override bool Equals(object obj)
-            {
-                if (obj is Rect r) return Equals(r);
-                return false;
-            }
-
-            public override string ToString()
-            {
-                return $"{{Left={Left},Top={Top},Right={Right},Bottom={Bottom}}}";
             }
 
             public int Left;

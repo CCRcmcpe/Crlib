@@ -32,6 +32,7 @@ namespace REVUnit.Crlib.Extension
             var random = new Random();
             float f = 1 / probability;
             var i = 2;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (f - Math.Truncate(f) != 0)
             {
                 while (Math.Abs(f * i - Math.Truncate(f * i)) > float.Epsilon) i++;
@@ -49,6 +50,7 @@ namespace REVUnit.Crlib.Extension
         {
             float f = 1 / probability;
             var i = 1;
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
             if (f - Math.Truncate(f) != 0)
             {
                 while (Math.Abs(f * i - Math.Truncate(f * i)) > float.Epsilon) i++;
