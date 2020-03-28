@@ -59,14 +59,14 @@ namespace REVUnit.Crlib.Input
             T result;
             while (true)
             {
+                if (t.IsEnum)
+                    Console.WriteLine(
+                        $"{t.GetEnumValues().Cast<IConvertible>().Select(it => it.ToType(t.GetEnumUnderlyingType())).Select(it => $"[{it}]={t.GetEnumName(it)}").GetLiteral()}");
                 Console.Write(hint);
                 if (!NextToken()) throw new EndOfStreamException();
                 if (string.IsNullOrWhiteSpace(_nextToken) || !TryParse(_nextToken, out result))
                 {
                     Console.WriteLine($"Expecting a {t.Name} literal, invalid token \"{_nextToken}\".");
-                    if (t.IsEnum)
-                        Console.WriteLine(
-                            $"Available options:{Environment.NewLine}{t.GetEnumValues().Cast<IConvertible>().Select(it => it.ToType(t.GetEnumUnderlyingType())).Select(it => $"[{it}]={t.GetEnumName(it)}").GetLiteral()}");
                     hint = "Enter again: ";
                 }
                 else

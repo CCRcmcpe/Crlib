@@ -5,8 +5,8 @@
         <UseWPF>true</UseWPF>
         <UseWindowsForms>true</UseWindowsForms>
         <Company>REV Unit</Company>
-        <AssemblyVersion>1.5.0</AssemblyVersion>
-        <FileVersion>1.5.0</FileVersion>
+        <AssemblyVersion>1.5.1</AssemblyVersion>
+        <FileVersion>1.5.1</FileVersion>
         <RootNamespace>REVUnit.Crlib</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
@@ -21,7 +21,6 @@
 
     <ItemGroup>
         <Folder Include="Dlls\" />
-        <Folder Include="Properties\" />
     </ItemGroup>
 
     <ItemGroup>
