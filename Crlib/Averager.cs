@@ -5,37 +5,37 @@ namespace REVUnit.Crlib
 {
     public class Averager
     {
-        private readonly Queue<decimal> samples;
+        private readonly Queue<decimal> _samples;
 
         public Averager(int period)
         {
             Period = period;
-            samples = new Queue<decimal>(period);
+            _samples = new Queue<decimal>(period);
         }
 
         public decimal Alpha { get; } = 0.1m;
 
         public int Period { get; }
 
-        public decimal CurrentMa => samples.Count != 0 ? samples.Average() : 0m;
+        public decimal CurrentMa => _samples.Count != 0 ? _samples.Average() : 0m;
 
         public decimal CurrentWma
         {
             get
             {
-                return samples.DefaultIfEmpty().Aggregate((ema, nextQuote) => Alpha * nextQuote + (1m - Alpha) * ema);
+                return _samples.DefaultIfEmpty().Aggregate((ema, nextQuote) => Alpha * nextQuote + (1m - Alpha) * ema);
             }
         }
 
         public void Push(decimal sample)
         {
-            if (samples.Count == Period) samples.Dequeue();
-            samples.Enqueue(sample);
+            if (_samples.Count == Period) _samples.Dequeue();
+            _samples.Enqueue(sample);
         }
 
         public void ClearSample()
         {
-            samples.Clear();
+            _samples.Clear();
         }
     }
 }

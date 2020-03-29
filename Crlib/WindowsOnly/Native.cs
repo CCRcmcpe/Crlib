@@ -16,7 +16,7 @@ namespace REVUnit.Crlib.WindowsOnly
 
         [DllImport("kernel32.dll")]
         public static extern bool SetConsoleCtrlHandler(ConsoleCtrlHandler HandlerRoutine,
-            bool Add);
+            bool add);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();

@@ -58,16 +58,13 @@ namespace REVUnit.Crlib.Extension
         public static T[] ParallelFindAll<T>(this IList<T> list, Predicate<T> predicate)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
-            T[] result;
-            using (var matches = new BlockingCollection<T>())
+            using var matches = new BlockingCollection<T>();
+            Parallel.For(0, list.Count - 1, delegate(int i, ParallelLoopState state)
             {
-                Parallel.For(0, list.Count - 1, delegate(int i, ParallelLoopState state)
-                {
-                    T t = list[i];
-                    if (predicate(t)) matches.Add(t);
-                });
-                result = matches.ToArray();
-            }
+                T t = list[i];
+                if (predicate(t)) matches.Add(t);
+            });
+            T[] result = matches.ToArray();
 
             return result;
         }
