@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace REVUnit.Crlib.WindowsOnly
+namespace REVUnit.Crlib
 {
     public delegate bool ConsoleCtrlHandler(uint ctrlType);
 

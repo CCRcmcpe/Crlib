@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace REVUnit.Crlib.WindowsOnly
+namespace REVUnit.Crlib
 {
     public static class Screenshot
     {
@@ -29,7 +29,7 @@ namespace REVUnit.Crlib.WindowsOnly
             location.Offset(1, 1);
             var blockRegionSize = new Size(rect.Size.Width - 3, rect.Size.Height - 3);
             var bitmap = new Bitmap(blockRegionSize.Width, blockRegionSize.Height);
-            using Graphics graphics = Graphics.FromImage(bitmap);
+            using var graphics = Graphics.FromImage(bitmap);
             graphics.CopyFromScreen(location, default, blockRegionSize);
             Bitmap result = bitmap;
             return result;

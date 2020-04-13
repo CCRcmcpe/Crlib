@@ -2,7 +2,7 @@
 using System.Security.Permissions;
 using System.Windows.Forms;
 
-namespace REVUnit.Crlib.WindowsOnly
+namespace REVUnit.Crlib
 {
     public sealed class HotKey : IMessageFilter
     {
@@ -51,7 +51,7 @@ namespace REVUnit.Crlib.WindowsOnly
         public static KeyModifiers GetModifiersFromKeys(Keys keydata, out Keys key)
         {
             key = keydata;
-            var keyModifiers = KeyModifiers.None;
+            KeyModifiers keyModifiers = KeyModifiers.None;
             if ((keydata & Keys.Control) == Keys.Control)
             {
                 keyModifiers |= KeyModifiers.Control;

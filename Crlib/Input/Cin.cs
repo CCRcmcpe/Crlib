@@ -20,10 +20,9 @@ namespace REVUnit.Crlib.Input
             {
                 if (t.IsEnum)
                     return (T) Enum.Parse(t, token, IgnoreCase);
-                else if (typeof(IConvertible).IsAssignableFrom(t))
+                if (typeof(IConvertible).IsAssignableFrom(t))
                     return (T) ((IConvertible) token).ToType(t, null);
-                else
-                    throw new Exception($"Unsupported type {t}.");
+                throw new Exception($"Unsupported type {t}.");
             }
 
             parser ??= DefaultParser;

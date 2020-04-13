@@ -40,10 +40,8 @@ namespace REVUnit.Crlib.Input
                     WaitingToken = stringBuilder.ToString();
                     return true;
                 }
-                else
-                {
-                    stringBuilder.Append(ch);
-                }
+
+                stringBuilder.Append(ch);
             }
         }
 

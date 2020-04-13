@@ -1,32 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
-    <PropertyGroup>
-        <TargetFramework>netcoreapp5.0</TargetFramework>
-        <UseWPF>true</UseWPF>
-        <UseWindowsForms>true</UseWindowsForms>
-        <Company>REV Unit</Company>
-        <AssemblyVersion>1.5.1</AssemblyVersion>
-        <FileVersion>1.5.1</FileVersion>
-        <RootNamespace>REVUnit.Crlib</RootNamespace>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Company>REV Unit</Company>
+    <AssemblyVersion>1.5.2</AssemblyVersion>
+    <FileVersion>1.5.2</FileVersion>
+    <RootNamespace>REVUnit.Crlib</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
 
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <DebugSymbols>false</DebugSymbols>
-    </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Dlls\" />
+  </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Dlls\" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Reference Include="System.Management">
-            <HintPath>Dlls\System.Management.dll</HintPath>
-        </Reference>
-    </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Management">
+      <HintPath>Dlls\System.Management.dll</HintPath>
+    </Reference>
+  </ItemGroup>
 
 </Project>

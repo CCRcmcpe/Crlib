@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using REVUnit.Crlib.WindowsOnly;
 
 namespace REVUnit.Crlib.Extension
 {

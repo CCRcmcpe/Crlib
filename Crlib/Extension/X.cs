@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace REVUnit.Crlib.Extension
 {
@@ -22,6 +22,26 @@ namespace REVUnit.Crlib.Extension
             action();
             sw.Stop();
             return sw.Elapsed;
+        }
+
+        /// <summary>
+        ///     使用<see cref="Stopwatch" />计量执行一次<paramref name="action" />的时间。
+        /// </summary>
+        public static TimeSpan MeasureAvg(Action action, int avgTime)
+        {
+            if (avgTime < 1) throw new ArgumentOutOfRangeException(nameof(avgTime));
+            var stopwatch = new Stopwatch();
+            TimeSpan time = TimeSpan.Zero;
+            for (var i = 0; i < avgTime; i++)
+            {
+                stopwatch.Start();
+                action();
+                stopwatch.Stop();
+                time += stopwatch.Elapsed;
+                stopwatch.Reset();
+            }
+
+            return time / avgTime;
         }
 
         /// <summary>
@@ -84,7 +104,7 @@ namespace REVUnit.Crlib.Extension
             {
                 TimeSpan time = Measure(() => result = function());
                 if (condiction(result)) return result;
-                if (time < cycleInterval) Task.Delay(cycleInterval - time).Wait();
+                if (time < cycleInterval) Thread.Sleep(cycleInterval - time);
             }
         }
 
@@ -116,7 +136,7 @@ namespace REVUnit.Crlib.Extension
             {
                 if (++retried == maxRetry) throw new Exception("Max retry reached!");
                 TimeSpan time = Measure(() => result = function());
-                if (time < cycleInterval) Task.Delay(cycleInterval - time).Wait();
+                if (time < cycleInterval) Thread.Sleep(cycleInterval - time);
                 if (condiction(result)) return result;
             }
         }
@@ -132,7 +152,7 @@ namespace REVUnit.Crlib.Extension
             while (true)
             {
                 TimeSpan time = Measure(() => value = function());
-                if (time < cycleInterval) Task.Delay(cycleInterval - time).Wait();
+                if (time < cycleInterval) Thread.Sleep(cycleInterval - time);
                 if (tryParser(value, out T result)) return result;
             }
         }
@@ -151,7 +171,7 @@ namespace REVUnit.Crlib.Extension
                 if (++retried == maxRetry) throw new Exception("Max retry reached!");
                 TimeSpan time = Measure(() => value = function());
                 if (tryParser(value, out T result)) return result;
-                else if (time < cycleInterval) Task.Delay(cycleInterval - time).Wait();
+                if (time < cycleInterval) Thread.Sleep(cycleInterval - time);
             }
         }
 
@@ -168,8 +188,8 @@ namespace REVUnit.Crlib.Extension
                 TimeSpan time = Measure(() => value = function());
                 (bool success, T result) = tryParser(value);
                 if (success) return result;
-                else if (time < cycleInterval)
-                    Task.Delay(cycleInterval - time).Wait(); //如果计算的时间已经超过周期间隔时间，不同步到下一个周期，直接继续
+                if (time < cycleInterval)
+                    Thread.Sleep(cycleInterval - time); //如果计算的时间已经超过周期间隔时间，不同步到下一个周期，直接继续
             }
         }
 
@@ -191,7 +211,7 @@ namespace REVUnit.Crlib.Extension
             {
                 TimeSpan time = Measure(() => flag = condiction());
                 if (flag) return;
-                else if (time < cycleInterval) Task.Delay(cycleInterval - time).Wait();
+                if (time < cycleInterval) Thread.Sleep(cycleInterval - time);
             }
         }
 
