@@ -70,12 +70,13 @@ namespace REVUnit.Crlib.Extension
         public static IEnumerable<IEnumerable<T>> GroupWhile<T>(this IEnumerable<T> source, Func<T, T, bool> condition)
         {
             if (source == null) throw new ArgumentNullException(nameof(source));
-            T t = source.First();
+            IEnumerable<T> enumerable = source as T[] ?? source.ToArray();
+            T t = enumerable.First();
             var list = new List<T>
             {
                 t
             };
-            foreach (T item in source.Skip(1))
+            foreach (T item in enumerable.Skip(1))
             {
                 if (!condition(t, item))
                 {

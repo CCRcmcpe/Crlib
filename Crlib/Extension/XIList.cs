@@ -62,6 +62,7 @@ namespace REVUnit.Crlib.Extension
             Parallel.For(0, list.Count - 1, delegate(int i, ParallelLoopState state)
             {
                 T t = list[i];
+                // ReSharper disable once AccessToDisposedClosure
                 if (predicate(t)) matches.Add(t);
             });
             T[] result = matches.ToArray();
