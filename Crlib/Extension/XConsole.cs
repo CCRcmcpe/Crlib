@@ -7,16 +7,19 @@ namespace REVUnit.Crlib.Extension
     {
         static XConsole()
         {
+#if WINDOWS
             if (!Native.SetConsoleCtrlHandler(ctrlType =>
             {
                 Exiting?.Invoke();
                 return true;
             }, true))
                 throw new Exception("Unable to set ConsoleCtrlHandler");
+#endif
         }
 
+#if WINDOWS
         public static IntPtr WindowHandle => Native.GetConsoleWindow();
-
+#endif
         public static int[] ReadInts()
         {
             return Console.ReadLine()?.Trim().Split(' ').Select(int.Parse).ToArray();
@@ -81,7 +84,8 @@ namespace REVUnit.Crlib.Extension
         {
             Console.Write("\b\0\b");
         }
-
+#if WINDOWS
         public static event Action Exiting;
+#endif
     }
 }
