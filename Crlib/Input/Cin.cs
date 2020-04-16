@@ -12,50 +12,27 @@ namespace REVUnit.Crlib.Input
         private string _nextToken;
         public bool IgnoreCase { get; set; } = true;
 
-        public T Get<T>(string hint = null, Func<string, T> parser = null)
+        public T Get<T>() where T : IConvertible
         {
-            Type t = typeof(T);
+            return Get(null, Parse<T>);
+        }
 
-            T DefaultParser(string token)
-            {
-                if (t.IsEnum)
-                    return (T) Enum.Parse(t, token, IgnoreCase);
-                if (typeof(IConvertible).IsAssignableFrom(t))
-                    return (T) ((IConvertible) token).ToType(t, null);
-                throw new Exception($"Unsupported type {t}.");
-            }
 
-            parser ??= DefaultParser;
+        public T Get<T>(string hint) where T : IConvertible
+        {
+            return Get(hint, Parse<T>);
+        }
 
-            bool TryParse(string token, out T result2)
-            {
-                try
-                {
-                    result2 = parser(token);
-                    return true;
-                }
-                catch
-                {
-                    try
-                    {
-                        result2 = DefaultParser(token);
-                    }
-                    catch
-                    {
-                        result2 = default;
-                        return false;
-                    }
-
-                    result2 = default;
-                    return false;
-                }
-            }
-
+        public T Get<T>(string hint, Func<string, T> parser) where T : IConvertible
+        {
+            if (parser == null) throw new ArgumentNullException(nameof(parser));
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
             else if (!hint.EndsWith(": ")) hint += ": ";
 
+            Type t = typeof(T);
             T result;
+
             while (true)
             {
                 if (t.IsEnum)
@@ -79,37 +56,38 @@ namespace REVUnit.Crlib.Input
 
         public static T Get<T>(Func<string, T> parser)
         {
-            var stack = new Stack<char>();
+            if (parser == null) throw new ArgumentNullException(nameof(parser));
+            var queue = new Queue<char>();
             while (true)
             {
                 ConsoleKeyInfo consoleKeyInfo = Console.ReadKey(true);
                 char keyChar = consoleKeyInfo.KeyChar;
                 if (!char.IsControl(keyChar))
                 {
-                    stack.Push(keyChar);
+                    queue.Enqueue(keyChar);
                     try
                     {
-                        parser(new string(stack.Reverse().ToArray()));
+                        parser(new string(queue.ToArray()));
                         Console.Write(keyChar);
                     }
                     catch (FormatException)
                     {
-                        stack.Pop();
+                        queue.Dequeue();
                     }
                 }
                 else
                 {
                     if (consoleKeyInfo.Key == ConsoleKey.Enter) break;
-                    if (consoleKeyInfo.Key == ConsoleKey.Backspace && stack.Count > 0)
+                    if (consoleKeyInfo.Key == ConsoleKey.Backspace && queue.Count > 0)
                     {
-                        stack.Pop();
+                        queue.Dequeue();
                         XConsole.Backspace();
                     }
                 }
             }
 
             Console.WriteLine();
-            return parser(new string(stack.Reverse().ToArray()));
+            return parser(new string(queue.Reverse().ToArray()));
         }
 
         public bool NextToken()
@@ -130,6 +108,33 @@ namespace REVUnit.Crlib.Input
                 }
 
                 stringBuilder.Append(readc);
+            }
+        }
+
+        private T Parse<T>(string value) where T : IConvertible
+        {
+            Type t = typeof(T);
+            if (t.IsEnum)
+            {
+                var ret = (T) Enum.Parse(t, value, IgnoreCase);
+                if (!Enum.IsDefined(t, ret)) throw new Exception($"Input (\"{t}\") is not in range.");
+                return ret;
+            } 
+
+            return (T) value.ToType(t);
+        }
+
+        private bool TryParse<T>(string value, out T result) where T : IConvertible
+        {
+            try
+            {
+                result = Parse<T>(value);
+                return true;
+            }
+            catch
+            {
+                result = default;
+                return false;
             }
         }
     }
