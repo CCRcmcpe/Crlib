@@ -12,20 +12,8 @@ namespace REVUnit.Crlib.Input
         private string _nextToken;
         public bool IgnoreCase { get; set; } = true;
 
-        public T Get<T>() where T : IConvertible
+        public T Get<T>(string hint = null) where T : IConvertible
         {
-            return Get(null, Parse<T>);
-        }
-
-
-        public T Get<T>(string hint) where T : IConvertible
-        {
-            return Get(hint, Parse<T>);
-        }
-
-        public T Get<T>(string hint, Func<string, T> parser) where T : IConvertible
-        {
-            if (parser == null) throw new ArgumentNullException(nameof(parser));
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
             else if (!hint.EndsWith(": ")) hint += ": ";
@@ -87,7 +75,7 @@ namespace REVUnit.Crlib.Input
             }
 
             Console.WriteLine();
-            return parser(new string(queue.Reverse().ToArray()));
+            return parser(new string(queue.ToArray()));
         }
 
         public bool NextToken()
@@ -119,7 +107,7 @@ namespace REVUnit.Crlib.Input
                 var ret = (T) Enum.Parse(t, value, IgnoreCase);
                 if (!Enum.IsDefined(t, ret)) throw new Exception($"Input (\"{t}\") is not in range.");
                 return ret;
-            } 
+            }
 
             return (T) value.ToType(t);
         }
