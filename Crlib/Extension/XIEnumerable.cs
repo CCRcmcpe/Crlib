@@ -8,7 +8,7 @@ namespace REVUnit.Crlib.Extension
     {
         public static string GetLiteral<T>(this IEnumerable<T> objects)
         {
-            return string.Join(',', objects);
+            return $"[{string.Join(", ", objects)}]";
         }
 
         public static void Cw<T>(this IEnumerable<T> objects)
@@ -44,22 +44,25 @@ namespace REVUnit.Crlib.Extension
 
         public static bool AllEqual<T>(this IEnumerable<T> source)
         {
-            T[] arr = source.ToArray();
-            if (arr.Length == 0) throw new ArgumentException("The item count of enumerable must > 0", nameof(source));
-            if (arr.Length == 1) return true;
-            for (var i = 1; i < arr.Length; i++)
+            return source.AllEqual((a, b) => !a.Equals(b));
+        }
+
+        public static bool AllEqual<T>(this IEnumerable<T> source, Func<T, T, bool> comparer)
+        {
+            T[] array = source.ToArray();
+            int length = array.Length;
+            if (length == 0) throw new ArgumentException("The item count of enumerable must > 0", nameof(source));
+            if (length == 1) return true;
+            T prev = array[0];
+            for (var i = 1; i < length; i++)
             {
-                T prev = arr[i - 1];
-                T curr = arr[i];
-                if (!Equals(prev, curr)) return false;
+                T curr = array[i];
+                if (!comparer(curr, prev)) return false;
+
+                prev = curr;
             }
 
             return true;
-        }
-
-        public static bool AllNotEqual<T>(this IEnumerable<T> source)
-        {
-            return !source.AllEqual();
         }
 
         public static void Do<T>(this IEnumerable<T> source, Action<T> action)

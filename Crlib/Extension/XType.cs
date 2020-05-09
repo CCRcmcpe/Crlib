@@ -19,6 +19,11 @@ namespace REVUnit.Crlib.Extension
             return null;
         }
 
+        public static bool TypeIs(this Type a, Type b)
+        {
+            return b.IsAssignableFrom(a);
+        }
+
         public static T New<T>(this Type type, params object[] parameters)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
