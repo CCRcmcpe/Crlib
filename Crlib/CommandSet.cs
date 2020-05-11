@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 
@@ -46,14 +47,15 @@ namespace REVUnit.Crlib
             _commands.Clear();
         }
 
-        public TReturn RunCommand(string name, TParam[] parameters = null, bool throwOnNotFound = false)
+        [return: MaybeNull]
+        public TReturn RunCommand(string name, TParam[]? parameters = null, bool throwOnNotFound = false)
         {
             parameters ??= Array.Empty<TParam>();
-            CommandMethod commandMethod = _commands.Find(c => c.Method.Name == name);
+            CommandMethod? commandMethod = _commands.Find(c => c.Method.Name == name);
             if (commandMethod == null)
             {
                 if (throwOnNotFound) throw new NullReferenceException("Command not found.");
-                return default;
+                return default!;
             }
 
             return commandMethod(parameters);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ namespace REVUnit.Crlib.Input
 {
     public class Cin
     {
-        private string _nextToken;
+        private string? _nextToken;
         public bool IgnoreCase { get; set; } = true;
 
-        public T Get<T>(string hint = null) where T : IConvertible
+        public T Get<T>(string? hint = null) where T : IConvertible
         {
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
@@ -112,7 +113,7 @@ namespace REVUnit.Crlib.Input
             return (T) value.ToType(t);
         }
 
-        private bool TryParse<T>(string value, out T result) where T : IConvertible
+        private bool TryParse<T>(string value, [MaybeNullWhen(false)] out T result) where T : IConvertible
         {
             try
             {

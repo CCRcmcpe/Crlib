@@ -14,14 +14,14 @@ namespace REVUnit.Crlib.Extension
             Console.Write(s);
         }
 
-        public static void Cwl(this string s)
+        public static void Cl(this string s)
         {
             Console.Write(s);
         }
 
         public static byte[] ToBytes(this string s)
         {
-            return X.Encoding.GetBytes(s);
+            return Encoding.Default.GetBytes(s);
         }
 
         public static StringBuilder CreateStringBuilder(this string s)
@@ -128,7 +128,7 @@ namespace REVUnit.Crlib.Extension
 
         public static double SimilarityTo(this string s, string target)
         {
-            if (s == null || target == null || s.Length == 0 || target.Length == 0) return 0.0;
+            if (s.Length == 0 || target.Length == 0) return 0.0;
             if (s == target) return 1.0;
             int num = s.LevenshteinDistanceTo(target);
             return 100.0 - num / (double) Math.Max(s.Length, target.Length) * 100.0;

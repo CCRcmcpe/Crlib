@@ -23,7 +23,7 @@ namespace REVUnit.Crlib.Input
 
         public bool IgnoreCase { get; set; }
 
-        public string WaitingToken { get; private set; }
+        public string? WaitingToken { get; private set; }
 
         public bool NextToken()
         {
@@ -55,9 +55,9 @@ namespace REVUnit.Crlib.Input
         private string TakeToken()
         {
             if (WaitingToken == null) NextToken();
-            string waitingToken = WaitingToken;
+            string waitingToken = WaitingToken!;
             WaitingToken = null;
-            return waitingToken;
+            return waitingToken!;
         }
 
         public T Next<T>() where T : IConvertible

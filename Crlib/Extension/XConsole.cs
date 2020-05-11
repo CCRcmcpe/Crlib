@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 
 namespace REVUnit.Crlib.Extension
@@ -20,12 +21,12 @@ namespace REVUnit.Crlib.Extension
 #if WINDOWS
         public static IntPtr WindowHandle => Native.GetConsoleWindow();
 #endif
-        public static int[] ReadInts()
+        public static int[]? ReadIntsLine()
         {
             return Console.ReadLine()?.Trim().Split(' ').Select(int.Parse).ToArray();
         }
 
-        public static double[] ReadDoubles()
+        public static double[]? ReadDoublesLine()
         {
             return Console.ReadLine()?.Trim().Split(' ').Select(double.Parse).ToArray();
         }
@@ -38,39 +39,15 @@ namespace REVUnit.Crlib.Extension
 
         public static char Read()
         {
-            return (char) Console.Read();
-        }
-
-        public static void Write(string text, ConsoleColor color)
-        {
-            ConsoleColor foregroundColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.Write(text);
-            Console.ForegroundColor = foregroundColor;
-        }
-
-        public static void WriteLine(string text, ConsoleColor color)
-        {
-            ConsoleColor foregroundColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.WriteLine(text);
-            Console.ForegroundColor = foregroundColor;
+            int i = Console.Read();
+            if (i < char.MinValue) throw new IOException("Unexcepted EOF");
+            return (char) i;
         }
 
         public static string ReadLine(string hint)
         {
             Console.Write(hint);
-            return Console.ReadLine();
-        }
-
-        public static string ReadLine(string hint, ConsoleColor inColor)
-        {
-            Console.Write(hint);
-            ConsoleColor foregroundColor = Console.ForegroundColor;
-            Console.ForegroundColor = inColor;
-            string result = Console.ReadLine();
-            Console.ForegroundColor = foregroundColor;
-            return result;
+            return Console.ReadLine() ?? throw new IOException("Unexpected EOF");
         }
 
         public static void FormatWrite(params string[] texts)
@@ -85,7 +62,7 @@ namespace REVUnit.Crlib.Extension
             Console.Write("\b\0\b");
         }
 #if WINDOWS
-        public static event Action Exiting;
+        public static event Action? Exiting;
 #endif
     }
 }

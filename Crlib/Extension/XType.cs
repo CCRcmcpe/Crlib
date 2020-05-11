@@ -1,13 +1,14 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace REVUnit.Crlib.Extension
 {
     public static class XType
     {
-        public static Type GetType(string typeName, bool ignoreCase = false, bool throwOnError = false)
+        public static Type? GetType(string typeName, bool ignoreCase = false, bool throwOnError = false)
         {
-            Type type = AppDomain.CurrentDomain
+            Type? type = AppDomain.CurrentDomain
                 .GetAssemblies()
                 .SelectMany(x => x.GetTypes())
                 .FirstOrDefault(t => t.Name.Equals(typeName,
@@ -24,10 +25,11 @@ namespace REVUnit.Crlib.Extension
             return b.IsAssignableFrom(a);
         }
 
+        [return: MaybeNull]
         public static T New<T>(this Type type, params object[] parameters)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
-            return (T) Activator.CreateInstance(type, parameters);
+            return (T) Activator.CreateInstance(type, parameters)!;
         }
     }
 }

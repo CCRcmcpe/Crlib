@@ -18,7 +18,7 @@ namespace REVUnit.Crlib.Extension
 
         public static void Cwl<T>(this IEnumerable<T> objects)
         {
-            objects.GetLiteral().Cwl();
+            objects.GetLiteral().Cl();
         }
 
         public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IEnumerable<T> enumerable)
@@ -44,7 +44,8 @@ namespace REVUnit.Crlib.Extension
 
         public static bool AllEqual<T>(this IEnumerable<T> source)
         {
-            return source.AllEqual((a, b) => !a.Equals(b));
+            if (source == null) throw new ArgumentNullException(nameof(source));
+            return source.AllEqual((a, b) => a != null && !a.Equals(b));
         }
 
         public static bool AllEqual<T>(this IEnumerable<T> source, Func<T, T, bool> comparer)

@@ -8,11 +8,15 @@ namespace REVUnit.Crlib.Extension
     {
         public static bool IsDirectory(string path)
         {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(path));
             return File.GetAttributes(path).HasFlag(FileAttributes.Directory);
         }
 
-        public static string ExpandPath(string path)
+        public static string? ExpandPath(string path)
         {
+            if (string.IsNullOrWhiteSpace(path))
+                throw new ArgumentException("Value cannot be null or whitespace.", nameof(path));
             return Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Machine)
                 ?.Split(';')
                 .Select(p => Path.Combine(p, path)).Where(File.Exists).FirstOrDefault();

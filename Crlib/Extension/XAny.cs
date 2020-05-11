@@ -1,13 +1,15 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using Newtonsoft.Json;
 
 namespace REVUnit.Crlib.Extension
 {
     public static class XAny
     {
-        public static T As<T>(this object it) where T : class
+        public static T? As<T>(this object it) where T : class
         {
             return it as T;
         }
@@ -23,6 +25,7 @@ namespace REVUnit.Crlib.Extension
             return it;
         }
 
+        [return: MaybeNull]
         public static T ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T> parser)
         {
             return parser(it, out T result) ? result : default;
@@ -50,7 +53,7 @@ namespace REVUnit.Crlib.Extension
         public static void SerializeToJsonFile(this object obj, string filePath,
             Formatting format = Formatting.Indented)
         {
-            using var jsonTextWriter = new JsonTextWriter(new StreamWriter(filePath, false, X.Encoding));
+            using var jsonTextWriter = new JsonTextWriter(new StreamWriter(filePath, false, Encoding.Default));
             new JsonSerializer
             {
                 Formatting = format
