@@ -31,6 +31,12 @@ namespace REVUnit.Crlib.Extension
             return Console.ReadLine()?.Trim().Split(' ').Select(double.Parse).ToArray();
         }
 
+        public static void AnyKey()
+        {
+            Console.Write("请按任意键继续. . .");
+            Console.ReadKey(true);
+        }
+
         public static void AnyKey(string message)
         {
             Console.Write(message + "，请按任意键继续. . .");
