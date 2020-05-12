@@ -33,13 +33,13 @@ namespace REVUnit.Crlib.Extension
 
         public static void AnyKey()
         {
-            Console.Write("请按任意键继续. . .");
+            Console.WriteLine("请按任意键继续. . .");
             Console.ReadKey(true);
         }
 
         public static void AnyKey(string message)
         {
-            Console.Write(message + "，请按任意键继续. . .");
+            Console.WriteLine(message + "，请按任意键继续. . .");
             Console.ReadKey(true);
         }
 
