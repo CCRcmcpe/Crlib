@@ -27,15 +27,15 @@ namespace REVUnit.Crlib
             }
         }
 
+        public void ClearSample()
+        {
+            _samples.Clear();
+        }
+
         public void Push(decimal sample)
         {
             if (_samples.Count == Period) _samples.Dequeue();
             _samples.Enqueue(sample);
-        }
-
-        public void ClearSample()
-        {
-            _samples.Clear();
         }
     }
 }

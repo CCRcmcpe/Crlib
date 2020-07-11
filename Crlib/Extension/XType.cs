@@ -15,14 +15,9 @@ namespace REVUnit.Crlib.Extension
                     ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal));
             if (type != null) return type;
 
-            if (throwOnError) throw new Exception("Type not found.");
+            if (throwOnError) throw new Exception("Type not found");
 
             return null;
-        }
-
-        public static bool TypeIs(this Type a, Type b)
-        {
-            return b.IsAssignableFrom(a);
         }
 
         [return: MaybeNull]
@@ -30,6 +25,11 @@ namespace REVUnit.Crlib.Extension
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
             return (T) Activator.CreateInstance(type, parameters)!;
+        }
+
+        public static bool TypeIs(this Type a, Type b)
+        {
+            return b.IsAssignableFrom(a);
         }
     }
 }

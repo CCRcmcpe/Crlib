@@ -9,6 +9,12 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XAny
     {
+        public static T Also<T>(this T it, Action<T> action)
+        {
+            action(it);
+            return it;
+        }
+
         public static T? As<T>(this object it) where T : class
         {
             return it as T;
@@ -19,10 +25,14 @@ namespace REVUnit.Crlib.Extension
             return (T) it;
         }
 
-        public static T Also<T>(this T it, Action<T> action)
+        public static void Cl(this object obj)
         {
-            action(it);
-            return it;
+            Console.WriteLine(obj);
+        }
+
+        public static void Cw(this object obj)
+        {
+            Console.Write(obj);
         }
 
         [return: MaybeNull]
@@ -31,18 +41,18 @@ namespace REVUnit.Crlib.Extension
             return parser(it, out T result) ? result : default;
         }
 
+        public static void PopulateJsonFile(this object obj, string filePath)
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            JsonConvert.PopulateObject(File.ReadAllText(filePath), obj);
+        }
+
         public static byte[] SerializeToBytes(this object obj)
         {
             using var memoryStream = new MemoryStream();
             new BinaryFormatter().Serialize(memoryStream, obj);
             byte[] result = memoryStream.ToArray();
             return result;
-        }
-
-        public static void PopulateJsonFile(this object obj, string filePath)
-        {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
-            JsonConvert.PopulateObject(File.ReadAllText(filePath), obj);
         }
 
         public static string SerializeToJson(this object obj, Formatting format = Formatting.Indented)
@@ -58,16 +68,6 @@ namespace REVUnit.Crlib.Extension
             {
                 Formatting = format
             }.Serialize(jsonTextWriter, obj);
-        }
-
-        public static void Cw(this object obj)
-        {
-            Console.Write(obj);
-        }
-
-        public static void Cl(this object obj)
-        {
-            Console.WriteLine(obj);
         }
     }
 }

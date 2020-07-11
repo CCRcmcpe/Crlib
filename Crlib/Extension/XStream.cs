@@ -29,6 +29,13 @@ namespace REVUnit.Crlib.Extension
             await WriteAsync(stream, buffer).ConfigureAwait(false);
         }
 
+        public static async Task WriteAsync(this Stream stream, byte[] buffer)
+        {
+            await (stream ?? throw new ArgumentNullException(nameof(stream))).WriteAsync(buffer, 0,
+                (buffer ?? throw new ArgumentNullException(nameof(buffer))).Length);
+            if (AutoFlush) await stream.FlushAsync().ConfigureAwait(false);
+        }
+
         public static void WriteLine(this Stream stream, string str)
         {
             Write(stream, str + Environment.NewLine);
@@ -37,13 +44,6 @@ namespace REVUnit.Crlib.Extension
         public static async Task WriteLineAsync(this Stream stream, string str)
         {
             await WriteAsync(stream, str + Environment.NewLine).ConfigureAwait(false);
-        }
-
-        public static async Task WriteAsync(this Stream stream, byte[] buffer)
-        {
-            await (stream ?? throw new ArgumentNullException(nameof(stream))).WriteAsync(buffer, 0,
-                (buffer ?? throw new ArgumentNullException(nameof(buffer))).Length);
-            if (AutoFlush) await stream.FlushAsync().ConfigureAwait(false);
         }
     }
 }

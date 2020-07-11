@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using REVUnit.Crlib.Extension;
+using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Input
 {
@@ -26,13 +27,14 @@ namespace REVUnit.Crlib.Input
             {
                 if (t.IsEnum)
                     Console.WriteLine(
-                        $"{t.GetEnumValues().Cast<IConvertible>().Select(it => it.ToType(t.GetEnumUnderlyingType())).Select(it => $"[{it}]={t.GetEnumName(it)}").GetLiteral()}");
+                        t.GetEnumValues().Cast<IConvertible>().Select(it => it.ToType(t.GetEnumUnderlyingType()))
+                            .Select(it => $"[{it}]={t.GetEnumName(it)}").GetLiteral());
                 Console.Write(hint);
                 if (!NextToken()) throw new EndOfStreamException();
                 if (string.IsNullOrWhiteSpace(_nextToken) || !TryParse(_nextToken, out result))
                 {
-                    Console.WriteLine($"Expecting a {t.Name} literal, invalid token \"{_nextToken}\".");
-                    hint = "Enter again: ";
+                    Console.WriteLine(Resources.Cin_InvalidToken, t.Name, _nextToken);
+                    hint = Resources.Cin_EnterAgainHint;
                 }
                 else
                 {
@@ -106,7 +108,7 @@ namespace REVUnit.Crlib.Input
             if (t.IsEnum)
             {
                 var ret = (T) Enum.Parse(t, value, IgnoreCase);
-                if (!Enum.IsDefined(t, ret)) throw new Exception($"Input (\"{t}\") is not in range.");
+                if (!Enum.IsDefined(t, ret)) throw new Exception(string.Format(Resources.Cin_InputOutOfRange, t));
                 return ret;
             }
 

@@ -6,11 +6,6 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XNumber
     {
-        public static bool InRange(this int i, int min, int max)
-        {
-            return i > min && i < max;
-        }
-
         public static bool AtRange(this int i, int min, int max)
         {
             return i >= min && i <= max;
@@ -49,6 +44,11 @@ namespace REVUnit.Crlib.Extension
             }
 
             return list.ToArray();
+        }
+
+        public static bool InRange(this int i, int min, int max)
+        {
+            return i > min && i < max;
         }
     }
 }

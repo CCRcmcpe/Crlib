@@ -9,19 +9,9 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XString
     {
-        public static void Cw(this string s)
-        {
-            Console.Write(s);
-        }
-
         public static void Cl(this string s)
         {
             Console.Write(s);
-        }
-
-        public static byte[] ToBytes(this string s)
-        {
-            return Encoding.Default.GetBytes(s);
         }
 
         public static StringBuilder CreateStringBuilder(this string s)
@@ -29,31 +19,16 @@ namespace REVUnit.Crlib.Extension
             return new StringBuilder(s);
         }
 
-        public static string[] Split(this string s, string separator)
+        public static void Cw(this string s)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
-            return s.Split(new[]
-            {
-                separator
-            }, StringSplitOptions.None);
+            Console.Write(s);
         }
 
-        public static string[] SplitNoEmptyEntries(this string s, string separator)
+        public static string FirstLetterUpper(this string s)
         {
             if (s == null) throw new ArgumentNullException(nameof(s));
-            return s.Split(new[]
-            {
-                separator
-            }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        public static string[] SplitNoEmptyEntries(this string s, char separator)
-        {
-            if (s == null) throw new ArgumentNullException(nameof(s));
-            return s.Split(new[]
-            {
-                separator
-            }, StringSplitOptions.RemoveEmptyEntries);
+            if (s.Length <= 1) return s.ToUpper(CultureInfo.InvariantCulture);
+            return char.ToUpper(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
         }
 
         public static IEnumerable<string> LazySplit(this string s, string separator,
@@ -78,21 +53,6 @@ namespace REVUnit.Crlib.Extension
             RegexOptions options = RegexOptions.None)
         {
             return s.LazySplitNoEmptyEntries(separator.ToString(CultureInfo.InvariantCulture), options);
-        }
-
-        public static string FirstLetterUpper(this string s)
-        {
-            if (s == null) throw new ArgumentNullException(nameof(s));
-            if (s.Length <= 1) return s.ToUpper(CultureInfo.InvariantCulture);
-            return char.ToUpper(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
-        }
-
-        public static string Numeral(this string s, int system)
-        {
-            if (s == null) throw new ArgumentNullException(nameof(s));
-            var stringBuilder = new StringBuilder();
-            foreach (char value in s) stringBuilder.Append(Convert.ToString(value, system).PadLeft(8, '0'));
-            return stringBuilder.ToString();
         }
 
         public static int LevenshteinDistanceTo(this string s, string target)
@@ -126,12 +86,26 @@ namespace REVUnit.Crlib.Extension
             return array[length][length2];
         }
 
-        public static double SimilarityTo(this string s, string target)
+        public static string Numeral(this string s, int system)
         {
-            if (s.Length == 0 || target.Length == 0) return 0.0;
-            if (s == target) return 1.0;
-            int num = s.LevenshteinDistanceTo(target);
-            return 100.0 - num / (double) Math.Max(s.Length, target.Length) * 100.0;
+            if (s == null) throw new ArgumentNullException(nameof(s));
+            var stringBuilder = new StringBuilder();
+            foreach (char value in s) stringBuilder.Append(Convert.ToString(value, system).PadLeft(8, '0'));
+            return stringBuilder.ToString();
+        }
+
+        public static double[] ScanDoubles(this string s)
+        {
+            var d = 0.0;
+            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => double.TryParse(m.Value, out d)).Select(m => d)
+                .ToArray();
+        }
+
+        public static float[] ScanFloats(this string s)
+        {
+            var d = 0f;
+            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => float.TryParse(m.Value, out d)).Select(m => d)
+                .ToArray();
         }
 
         public static int[] ScanInts(this string s)
@@ -146,18 +120,44 @@ namespace REVUnit.Crlib.Extension
             return Regex.Matches(s, @"\d+").Where(m => uint.TryParse(m.Value, out i)).Select(m => i).ToArray();
         }
 
-        public static float[] ScanFloats(this string s)
+        public static double SimilarityTo(this string s, string target)
         {
-            var d = 0f;
-            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => float.TryParse(m.Value, out d)).Select(m => d)
-                .ToArray();
+            if (s.Length == 0 || target.Length == 0) return 0.0;
+            if (s == target) return 1.0;
+            int num = s.LevenshteinDistanceTo(target);
+            return 100.0 - num / (double) Math.Max(s.Length, target.Length) * 100.0;
         }
 
-        public static double[] ScanDoubles(this string s)
+        public static string[] Split(this string s, string separator)
         {
-            var d = 0.0;
-            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => double.TryParse(m.Value, out d)).Select(m => d)
-                .ToArray();
+            if (s == null) throw new ArgumentNullException(nameof(s));
+            return s.Split(new[]
+            {
+                separator
+            }, StringSplitOptions.None);
+        }
+
+        public static string[] SplitNoEmptyEntries(this string s, string separator)
+        {
+            if (s == null) throw new ArgumentNullException(nameof(s));
+            return s.Split(new[]
+            {
+                separator
+            }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static string[] SplitNoEmptyEntries(this string s, char separator)
+        {
+            if (s == null) throw new ArgumentNullException(nameof(s));
+            return s.Split(new[]
+            {
+                separator
+            }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static byte[] ToBytes(this string s)
+        {
+            return Encoding.Default.GetBytes(s);
         }
     }
 }

@@ -13,14 +13,14 @@ namespace REVUnit.Crlib.Extension
             return array;
         }
 
-        public static T[] With<T>(this T obj, params T[] elements)
-        {
-            return elements.Prepend(obj).ToArray();
-        }
-
         public static T[] Of<T>(params T[] elements)
         {
             return elements;
+        }
+
+        public static T[] With<T>(this T obj, params T[] elements)
+        {
+            return elements.Prepend(obj).ToArray();
         }
     }
 }

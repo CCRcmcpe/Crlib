@@ -54,7 +54,7 @@ namespace REVUnit.Crlib
             CommandMethod? commandMethod = _commands.Find(c => c.Method.Name == name);
             if (commandMethod == null)
             {
-                if (throwOnNotFound) throw new NullReferenceException("Command not found.");
+                if (throwOnNotFound) throw new NullReferenceException("Command not found");
                 return default!;
             }
 

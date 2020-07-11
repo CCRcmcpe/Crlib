@@ -3,6 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using REVUnit.Crlib.Extension;
+using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Input
 {
@@ -25,6 +26,29 @@ namespace REVUnit.Crlib.Input
 
         public string? WaitingToken { get; private set; }
 
+        public bool HasNext<T>() where T : IConvertible
+        {
+            return !typeof(T).IsEnum
+                ? WaitingToken.TryToType<T>(out _)
+                : Enum.TryParse(typeof(T), WaitingToken, IgnoreCase, out _);
+        }
+
+        public T Next<T>() where T : IConvertible
+        {
+            string text = TakeToken();
+            try
+            {
+                return typeof(T).IsEnum
+                    ? (T) Enum.Parse(typeof(T), text, IgnoreCase)
+                    : (T) ((IConvertible) text).ToType(typeof(T), CultureInfo.CurrentCulture);
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine(Resources.Scanner_InvalidValue, text);
+                throw;
+            }
+        }
+
         public bool NextToken()
         {
             var stringBuilder = new StringBuilder();
@@ -45,35 +69,12 @@ namespace REVUnit.Crlib.Input
             }
         }
 
-        public bool HasNext<T>() where T : IConvertible
-        {
-            return !typeof(T).IsEnum
-                ? WaitingToken.TryToType<T>(out _)
-                : Enum.TryParse(typeof(T), WaitingToken, IgnoreCase, out _);
-        }
-
         private string TakeToken()
         {
             if (WaitingToken == null) NextToken();
             string waitingToken = WaitingToken!;
             WaitingToken = null;
             return waitingToken!;
-        }
-
-        public T Next<T>() where T : IConvertible
-        {
-            string text = TakeToken();
-            try
-            {
-                return typeof(T).IsEnum
-                    ? (T) Enum.Parse(typeof(T), text, IgnoreCase)
-                    : (T) ((IConvertible) text).ToType(typeof(T), CultureInfo.CurrentCulture);
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine($"Invalid value \"{text}\".");
-                throw;
-            }
         }
     }
 }

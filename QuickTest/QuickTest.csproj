@@ -4,6 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>netcoreapp5.0</TargetFramework>
         <RootNamespace>REVUnit.Crlib.QuickTest</RootNamespace>
+        <nullable>enable</nullable>
     </PropertyGroup>
 
     <ItemGroup>
