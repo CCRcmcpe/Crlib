@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29209.152
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crlib", "Crlib\Crlib.csproj", "{EEA42C4E-E87B-4CB1-80F4-A7D928A28FBB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickTest", "QuickTest\QuickTest.csproj", "{1EC56403-30AC-4FE4-BEC1-FA1E64AF9EBA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8D15F64A-F727-4DB5-BFA7-3214BFC6E201}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -22,10 +20,6 @@ Global
 		{EEA42C4E-E87B-4CB1-80F4-A7D928A28FBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEA42C4E-E87B-4CB1-80F4-A7D928A28FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEA42C4E-E87B-4CB1-80F4-A7D928A28FBB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1EC56403-30AC-4FE4-BEC1-FA1E64AF9EBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1EC56403-30AC-4FE4-BEC1-FA1E64AF9EBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1EC56403-30AC-4FE4-BEC1-FA1E64AF9EBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1EC56403-30AC-4FE4-BEC1-FA1E64AF9EBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

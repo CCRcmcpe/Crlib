@@ -39,6 +39,7 @@ namespace REVUnit.Crlib.Extension
         {
             Console.Write("\b\0\b");
         }
+
 #if WINDOWS
         public static event Action? Exiting;
 #endif

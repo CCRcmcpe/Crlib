@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -41,18 +40,16 @@ namespace REVUnit.Crlib.Extension
             return parser(it, out T result) ? result : default;
         }
 
-        public static void PopulateJsonFile(this object obj, string filePath)
+        public static void PopulateWithJson(this object obj, string json)
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            JsonConvert.PopulateObject(json, obj);
+        }
+
+        public static void PopulateWithJsonFile(this object obj, string filePath)
         {
             if (obj == null) throw new ArgumentNullException(nameof(obj));
             JsonConvert.PopulateObject(File.ReadAllText(filePath), obj);
-        }
-
-        public static byte[] SerializeToBytes(this object obj)
-        {
-            using var memoryStream = new MemoryStream();
-            new BinaryFormatter().Serialize(memoryStream, obj);
-            byte[] result = memoryStream.ToArray();
-            return result;
         }
 
         public static string SerializeToJson(this object obj, Formatting format = Formatting.Indented)
