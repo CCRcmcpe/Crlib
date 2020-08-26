@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net5.0-windows</TargetFrameworks>
     <Company>REV Unit</Company>
     <RootNamespace>REVUnit.Crlib</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -29,11 +29,5 @@
       <Generator>ResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <DefineConstants>WINDOWS</DefineConstants>
-    <UseWPF>true</UseWPF>
-    <UseWindowsForms>true</UseWindowsForms>
-  </PropertyGroup>
 
 </Project>
