@@ -92,7 +92,7 @@ namespace REVUnit.Crlib.Extension
 
         private static IEnumerable<T> GeneratePermutation<T>(IList<T> list, IReadOnlyList<int> sequence)
         {
-            var array2 = list.ToArray();
+            T[] array2 = list.ToArray();
             for (var i = 0; i < array2.Length - 1; i++) X.Swap(ref array2[i], ref array2[i + sequence[i]]);
             return array2;
         }

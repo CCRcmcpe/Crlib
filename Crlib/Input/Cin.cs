@@ -69,11 +69,9 @@ namespace REVUnit.Crlib.Input
                 else
                 {
                     if (consoleKeyInfo.Key == ConsoleKey.Enter) break;
-                    if (consoleKeyInfo.Key == ConsoleKey.Backspace && queue.Count > 0)
-                    {
-                        queue.Dequeue();
-                        XConsole.Backspace();
-                    }
+                    if (consoleKeyInfo.Key != ConsoleKey.Backspace || queue.Count <= 0) continue;
+                    queue.Dequeue();
+                    XConsole.Backspace();
                 }
             }
 
@@ -85,7 +83,7 @@ namespace REVUnit.Crlib.Input
         {
             var stringBuilder = new StringBuilder();
 
-            while (Console.KeyAvailable)
+            while (true)
             {
                 int read = Console.Read();
                 if (read == -1) return false;
@@ -100,8 +98,6 @@ namespace REVUnit.Crlib.Input
 
                 stringBuilder.Append(readc);
             }
-
-            return false;
         }
 
         private bool TryParse<T>(string value, [MaybeNullWhen(false)] out T result) where T : IConvertible
