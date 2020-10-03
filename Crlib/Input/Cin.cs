@@ -85,8 +85,9 @@ namespace REVUnit.Crlib.Input
         {
             var stringBuilder = new StringBuilder();
 
-            while (Console.KeyAvailable)
+            while (true)
             {
+                if (!Console.KeyAvailable) continue;
                 int read = Console.Read();
                 if (read == -1) return false;
                 var readc = (char) read;
@@ -100,8 +101,6 @@ namespace REVUnit.Crlib.Input
 
                 stringBuilder.Append(readc);
             }
-
-            return false;
         }
 
         private bool TryParse<T>(string value, [MaybeNullWhen(false)] out T result) where T : IConvertible
