@@ -9,17 +9,12 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XString
     {
-        public static void Cl(this string s)
+        public static void Cl(this string? s)
         {
-            Console.Write(s);
+            Console.WriteLine(s);
         }
 
-        public static StringBuilder CreateStringBuilder(this string s)
-        {
-            return new StringBuilder(s);
-        }
-
-        public static void Cw(this string s)
+        public static void Cw(this string? s)
         {
             Console.Write(s);
         }
@@ -153,6 +148,11 @@ namespace REVUnit.Crlib.Extension
             {
                 separator
             }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        public static StringBuilder StringBuilder(this string? s)
+        {
+            return new StringBuilder(s);
         }
 
         public static byte[] ToBytes(this string s)

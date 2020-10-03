@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Newtonsoft.Json;
 
@@ -8,20 +9,11 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XAny
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T Also<T>(this T it, Action<T> action)
         {
             action(it);
             return it;
-        }
-
-        public static T? As<T>(this object it) where T : class
-        {
-            return it as T;
-        }
-
-        public static T Asx<T>(this object it)
-        {
-            return (T) it;
         }
 
         public static void Cl(this object obj)

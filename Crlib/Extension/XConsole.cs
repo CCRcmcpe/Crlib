@@ -7,22 +7,6 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XConsole
     {
-        static XConsole()
-        {
-#if WINDOWS
-            if (!Native.SetConsoleCtrlHandler(ctrlType =>
-            {
-                Exiting?.Invoke();
-                return true;
-            }, true))
-                throw new Exception("Unable to set ConsoleCtrlHandler");
-#endif
-        }
-
-#if WINDOWS
-        public static IntPtr WindowHandle => Native.GetConsoleWindow();
-#endif
-
         public static void AnyKey()
         {
             Console.WriteLine(Resources.XConsole_AnyKey);
@@ -37,12 +21,9 @@ namespace REVUnit.Crlib.Extension
 
         public static void Backspace()
         {
+            // ReSharper disable once LocalizableElement
             Console.Write("\b\0\b");
         }
-
-#if WINDOWS
-        public static event Action? Exiting;
-#endif
 
         public static void FormatWrite(params string[] texts)
         {
@@ -73,5 +54,20 @@ namespace REVUnit.Crlib.Extension
             Console.Write(hint);
             return Console.ReadLine() ?? throw new IOException("Unexpected EOF");
         }
+#if WINDOWS
+        static XConsole()
+        {
+            if (!Native.SetConsoleCtrlHandler(ctrlType =>
+            {
+                Exiting?.Invoke();
+                return true;
+            }, true))
+                throw new Exception("Unable to set ConsoleCtrlHandler");
+        }
+
+        public static IntPtr WindowHandle => Native.GetConsoleWindow();
+
+        public static event Action? Exiting;
+#endif
     }
 }

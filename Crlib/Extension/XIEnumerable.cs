@@ -6,30 +6,6 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XIEnumerable
     {
-        public static bool AllEqual<T>(this IEnumerable<T> source)
-        {
-            if (source == null) throw new ArgumentNullException(nameof(source));
-            return source.AllEqual((a, b) => a != null && !a.Equals(b));
-        }
-
-        public static bool AllEqual<T>(this IEnumerable<T> source, Func<T, T, bool> comparer)
-        {
-            T[] array = source.ToArray();
-            int length = array.Length;
-            if (length == 0) throw new ArgumentException("The enumerable must not be empty", nameof(source));
-            if (length == 1) return true;
-            T prev = array[0];
-            for (var i = 1; i < length; i++)
-            {
-                T curr = array[i];
-                if (!comparer(curr, prev)) return false;
-
-                prev = curr;
-            }
-
-            return true;
-        }
-
         public static void Cl<T>(this IEnumerable<T> objects)
         {
             objects.GetLiteral().Cl();
@@ -50,16 +26,15 @@ namespace REVUnit.Crlib.Extension
             return $"[{string.Join(", ", objects)}]";
         }
 
-        public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IEnumerable<T> enumerable)
+        public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IList<T> list)
         {
-            if (enumerable == null) throw new ArgumentNullException(nameof(enumerable));
-            T[] array = enumerable as T[] ?? enumerable.ToArray();
-            long[] factorials = Enumerable.Range(0, array.Length + 1).Select(Factorial).ToArray();
+            if (list == null) throw new ArgumentNullException(nameof(list));
+            long[] factorials = Enumerable.Range(0, list.Count + 1).Select(Factorial).ToArray();
             long num;
-            for (var i = 0L; i < factorials[array.Length]; i = num)
+            for (var i = 0L; i < factorials[list.Count]; i = num)
             {
-                int[] sequence = GenerateSequence(i, array.Length - 1, factorials);
-                yield return GeneratePermutation(array, sequence);
+                int[] sequence = GenerateSequence(i, list.Count - 1, factorials);
+                yield return GeneratePermutation(list, sequence);
                 num = i + 1L;
             }
         }
@@ -86,10 +61,10 @@ namespace REVUnit.Crlib.Extension
             }
         }
 
-        public static double Median<T>(this IEnumerable<T> x)
+        public static double Median<T>(this IEnumerable<double> x)
         {
             if (x == null) throw new ArgumentNullException(nameof(x));
-            dynamic[] data = x.OrderBy(n => n).Cast<dynamic>().ToArray();
+            double[] data = x.OrderBy(n => n).ToArray();
             if (data.Length == 0) throw new InvalidOperationException();
             return data.Length % 2 == 0
                 ? (data[data.Length / 2 - 1] + data[data.Length / 2]) / 2.0
@@ -115,9 +90,9 @@ namespace REVUnit.Crlib.Extension
             return num;
         }
 
-        private static IEnumerable<T> GeneratePermutation<T>(T[] array, IReadOnlyList<int> sequence)
+        private static IEnumerable<T> GeneratePermutation<T>(IList<T> list, IReadOnlyList<int> sequence)
         {
-            var array2 = (T[]) array.Clone();
+            var array2 = list.ToArray();
             for (var i = 0; i < array2.Length - 1; i++) X.Swap(ref array2[i], ref array2[i + sequence[i]]);
             return array2;
         }

@@ -27,7 +27,7 @@ namespace REVUnit.Crlib.Input
             {
                 if (t.IsEnum)
                     Console.WriteLine(
-                        t.GetEnumValues().Cast<IConvertible>().Select(it => it.ToType(t.GetEnumUnderlyingType()))
+                        t.GetEnumValues().Cast<IConvertible>().Select(it => it!.ToType(t.GetEnumUnderlyingType()))
                             .Select(it => $"[{it}]={t.GetEnumName(it)}").GetLiteral());
                 Console.Write(hint);
                 if (!NextToken()) throw new EndOfStreamException();
@@ -81,11 +81,11 @@ namespace REVUnit.Crlib.Input
             return parser(new string(queue.ToArray()));
         }
 
-        public bool NextToken()
+        private bool NextToken()
         {
             var stringBuilder = new StringBuilder();
 
-            while (true)
+            while (Console.KeyAvailable)
             {
                 int read = Console.Read();
                 if (read == -1) return false;
@@ -100,26 +100,26 @@ namespace REVUnit.Crlib.Input
 
                 stringBuilder.Append(readc);
             }
-        }
 
-        private T Parse<T>(string value) where T : IConvertible
-        {
-            Type t = typeof(T);
-            if (t.IsEnum)
-            {
-                var ret = (T) Enum.Parse(t, value, IgnoreCase);
-                if (!Enum.IsDefined(t, ret)) throw new Exception(string.Format(Resources.Cin_InputOutOfRange, t));
-                return ret;
-            }
-
-            return (T) value.ToType(t);
+            return false;
         }
 
         private bool TryParse<T>(string value, [MaybeNullWhen(false)] out T result) where T : IConvertible
         {
             try
             {
-                result = Parse<T>(value);
+                Type t = typeof(T);
+                if (t.IsEnum)
+                {
+                    var ret = (T) Enum.Parse(t, value, IgnoreCase);
+                    if (!Enum.IsDefined(t, ret)) throw new Exception(string.Format(Resources.Cin_InputOutOfRange, t));
+                    result = ret;
+                }
+                else
+                {
+                    result = (T) value.ToType(t);
+                }
+
                 return true;
             }
             catch
