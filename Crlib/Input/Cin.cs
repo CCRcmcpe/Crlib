@@ -85,7 +85,6 @@ namespace REVUnit.Crlib.Input
 
             while (true)
             {
-                if (!Console.KeyAvailable) continue;
                 int read = Console.Read();
                 if (read == -1) return false;
                 var readc = (char) read;
