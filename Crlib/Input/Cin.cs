@@ -46,20 +46,21 @@ namespace REVUnit.Crlib.Input
 
         public T Get<T>(string? hint, TryParser<string, T>.Agent tryParser)
         {
+            bool interactive = Environment.UserInteractive;
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
             else if (!hint.EndsWith(": ")) hint += ": ";
 
             Type type = typeof(T);
-            if (type.IsEnum && WriteEnumDescription) Console.WriteLine(GetEnumDescription(type));
+            if (type.IsEnum && interactive && WriteEnumDescription) Console.WriteLine(GetEnumDescription(type));
 
             while (true)
             {
-                Console.Write(hint);
+                if (interactive) Console.Write(hint);
                 string? token = NextToken();
                 if (!tryParser(token!, out T result))
                 {
-                    if (ThrowOnInvalidInput || !Environment.UserInteractive) throw new InvalidInputException(token);
+                    if (ThrowOnInvalidInput || !interactive) throw new InvalidInputException(token);
                     Console.WriteLine(Resources.Cin_InvalidInput, token);
                     hint = Resources.Cin_EnterAgainHint;
                 }
