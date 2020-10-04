@@ -47,8 +47,8 @@ namespace REVUnit.Crlib.Properties {
         }
         
         /// <summary>
-        ///   重写当前线程的 CurrentUICulture 属性
-        ///   重写当前线程的 CurrentUICulture 属性。
+        ///   重写当前线程的 CurrentUICulture 属性，对
+        ///   使用此强类型资源类的所有资源查找执行重写。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Globalization.CultureInfo Culture {
@@ -70,7 +70,7 @@ namespace REVUnit.Crlib.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Input (&quot;{0}&quot;) is out of range. 的本地化字符串。
+        ///   查找类似 Input &quot;{0}&quot; is out of range. 的本地化字符串。
         /// </summary>
         internal static string Cin_InputOutOfRange {
             get {
@@ -79,11 +79,20 @@ namespace REVUnit.Crlib.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Expecting a {0} type literal, invalid input &quot;{1}&quot;. 的本地化字符串。
+        ///   查找类似 Invalid input &quot;{0}&quot;. 的本地化字符串。
         /// </summary>
-        internal static string Cin_InvalidToken {
+        internal static string Cin_InvalidInput {
             get {
-                return ResourceManager.GetString("Cin_InvalidToken", resourceCulture);
+                return ResourceManager.GetString("Cin_InvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 Invalid input encountered: &quot;{0}&quot; 的本地化字符串。
+        /// </summary>
+        internal static string InvalidInputException_Message {
+            get {
+                return ResourceManager.GetString("InvalidInputException_Message", resourceCulture);
             }
         }
         

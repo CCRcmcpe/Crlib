@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using System.Text;
 using REVUnit.Crlib.Extension;
@@ -9,94 +9,84 @@ using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Input
 {
+    public class InvalidInputException : Exception
+    {
+        public InvalidInputException(string? errorToken)
+        {
+            ErrorToken = errorToken;
+        }
+
+        public string? ErrorToken { get; set; }
+        public override string Message => string.Format(Resources.InvalidInputException_Message, ErrorToken);
+        public override IDictionary Data => new ListDictionary {{"ErrorToken", ErrorToken}};
+    }
+
     public class Cin
     {
-        private string? _nextToken;
         public bool IgnoreCase { get; set; } = true;
+        public bool AutoTrim { get; set; } = true;
+        public bool WriteEnumDescription { get; set; }
+        public bool ThrowOnInvalidInput { get; set; }
 
         public T Get<T>(string? hint = null) where T : IConvertible
+        {
+            return Get<T>(hint, TryParse);
+        }
+
+        public T Get<T>(string? hint, Func<string, T> parser)
+        {
+            return Get<T>(hint, new TryParser<string, T>(parser).TryParse);
+        }
+
+        public T Get<T>(string? hint, TryParser<string, T>.Agent tryParser)
         {
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
             else if (!hint.EndsWith(": ")) hint += ": ";
 
-            Type t = typeof(T);
-            T result;
+            Type type = typeof(T);
+            if (type.IsEnum && WriteEnumDescription) Console.WriteLine(GetEnumDescription(type));
 
             while (true)
             {
-                if (t.IsEnum)
-                    Console.WriteLine(
-                        t.GetEnumValues().Cast<IConvertible>().Select(it => it!.ToType(t.GetEnumUnderlyingType()))
-                            .Select(it => $"[{it}]={t.GetEnumName(it)}").GetLiteral());
                 Console.Write(hint);
-                if (!NextToken()) throw new EndOfStreamException();
-                if (string.IsNullOrWhiteSpace(_nextToken) || !TryParse(_nextToken, out result))
+                string? token = NextToken();
+                if (!tryParser(token!, out T result))
                 {
-                    Console.WriteLine(Resources.Cin_InvalidToken, t.Name, _nextToken);
+                    if (ThrowOnInvalidInput || !Environment.UserInteractive) throw new InvalidInputException(token);
+                    Console.WriteLine(Resources.Cin_InvalidInput, token);
                     hint = Resources.Cin_EnterAgainHint;
                 }
                 else
                 {
-                    break;
+                    return result;
                 }
             }
-
-            return result;
         }
 
-        public static T Get<T>(Func<string, T> parser)
+        private static string GetEnumDescription(Type enumType)
         {
-            if (parser == null) throw new ArgumentNullException(nameof(parser));
-            var queue = new Queue<char>();
-            while (true)
-            {
-                ConsoleKeyInfo consoleKeyInfo = Console.ReadKey(true);
-                char keyChar = consoleKeyInfo.KeyChar;
-                if (!char.IsControl(keyChar))
-                {
-                    queue.Enqueue(keyChar);
-                    try
-                    {
-                        parser(new string(queue.ToArray()));
-                        Console.Write(keyChar);
-                    }
-                    catch (FormatException)
-                    {
-                        queue.Dequeue();
-                    }
-                }
-                else
-                {
-                    if (consoleKeyInfo.Key == ConsoleKey.Enter) break;
-                    if (consoleKeyInfo.Key != ConsoleKey.Backspace || queue.Count <= 0) continue;
-                    queue.Dequeue();
-                    XConsole.Backspace();
-                }
-            }
-
-            Console.WriteLine();
-            return parser(new string(queue.ToArray()));
+            return enumType.GetEnumValues().Cast<IConvertible>()
+                .Select(it => it!.ToType(enumType.GetEnumUnderlyingType()))
+                .Select(it => $"[{it}]={enumType.GetEnumName(it)}").GetLiteral();
         }
 
-        private bool NextToken()
+        private string? NextToken()
         {
             var stringBuilder = new StringBuilder();
 
             while (true)
             {
                 int read = Console.Read();
-                if (read == -1) return false;
-                var readc = (char) read;
-                if (Environment.NewLine[0] == readc)
+                if (read == -1) return null;
+                if (Environment.NewLine[0] == read)
                 {
                     if (Environment.NewLine.Length == 2) Console.Read(); // \r Already read, discard \n
-
-                    _nextToken = stringBuilder.ToString();
-                    return true;
+                    var notTrimmed = stringBuilder.ToString();
+                    return AutoTrim ? notTrimmed.Trim() : notTrimmed;
                 }
 
-                stringBuilder.Append(readc);
+                stringBuilder.Append((char) read);
             }
         }
 
@@ -104,16 +94,17 @@ namespace REVUnit.Crlib.Input
         {
             try
             {
-                Type t = typeof(T);
-                if (t.IsEnum)
+                Type type = typeof(T);
+                if (type.IsEnum)
                 {
-                    var ret = (T) Enum.Parse(t, value, IgnoreCase);
-                    if (!Enum.IsDefined(t, ret)) throw new Exception(string.Format(Resources.Cin_InputOutOfRange, t));
-                    result = ret;
+                    var parsed = (T) Enum.Parse(type, value, IgnoreCase);
+                    if (!Enum.IsDefined(type, parsed))
+                        throw new Exception(string.Format(Resources.Cin_InputOutOfRange, type));
+                    result = parsed;
                 }
                 else
                 {
-                    result = (T) value.ToType(t);
+                    result = value.ToType<T>();
                 }
 
                 return true;
