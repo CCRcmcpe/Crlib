@@ -27,7 +27,7 @@ namespace REVUnit.Crlib.Extension
         }
 
         [return: MaybeNull]
-        public static T ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T> parser)
+        public static T ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T>.Agent parser)
         {
             return parser(it, out T result) ? result : default;
         }

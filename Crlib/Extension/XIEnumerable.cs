@@ -77,7 +77,7 @@ namespace REVUnit.Crlib.Extension
             return x.GroupBy(v => v).OrderByDescending(g => g.Count()).First().Key;
         }
 
-        public static IEnumerable<T> SelectCanParse<TSrc, T>(this IEnumerable<TSrc> x, TryParser<TSrc, T> parser)
+        public static IEnumerable<T> SelectCanParse<TSrc, T>(this IEnumerable<TSrc> x, TryParser<TSrc, T>.Agent parser)
         {
             return x.Select(it => (success: parser(it, out T result), result)).Where(it => it.success)
                 .Select(it => it.result);
