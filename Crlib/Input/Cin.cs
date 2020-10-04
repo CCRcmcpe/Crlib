@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using REVUnit.Crlib.Extension;
 using REVUnit.Crlib.Properties;
 
@@ -21,14 +20,21 @@ namespace REVUnit.Crlib.Input
         public override IDictionary Data => new ListDictionary {{"ErrorToken", ErrorToken}};
     }
 
-    public class Cin
+    public class Cin : TextScanner
     {
-        public bool IgnoreCase { get; set; } = true;
-        public bool AutoTrim { get; set; } = true;
+        public Cin() : base(Console.In, Environment.NewLine)
+        {
+        }
+
         public bool WriteEnumDescription { get; set; }
         public bool ThrowOnInvalidInput { get; set; }
 
-        public T Get<T>(string? hint = null) where T : IConvertible
+        public override T Get<T>()
+        {
+            return Get<T>(null, TryParse);
+        }
+
+        public T Get<T>(string? hint) where T : IConvertible
         {
             return Get<T>(hint, TryParse);
         }
@@ -69,25 +75,6 @@ namespace REVUnit.Crlib.Input
             return enumType.GetEnumValues().Cast<IConvertible>()
                 .Select(it => it!.ToType(enumType.GetEnumUnderlyingType()))
                 .Select(it => $"[{it}]={enumType.GetEnumName(it)}").GetLiteral();
-        }
-
-        private string? NextToken()
-        {
-            var stringBuilder = new StringBuilder();
-
-            while (true)
-            {
-                int read = Console.Read();
-                if (read == -1) return null;
-                if (Environment.NewLine[0] == read)
-                {
-                    if (Environment.NewLine.Length == 2) Console.Read(); // \r Already read, discard \n
-                    var notTrimmed = stringBuilder.ToString();
-                    return AutoTrim ? notTrimmed.Trim() : notTrimmed;
-                }
-
-                stringBuilder.Append((char) read);
-            }
         }
 
         private bool TryParse<T>(string value, [MaybeNullWhen(false)] out T result) where T : IConvertible
