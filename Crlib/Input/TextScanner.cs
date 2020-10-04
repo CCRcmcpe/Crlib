@@ -19,7 +19,7 @@ namespace REVUnit.Crlib.Input
         }
 
         public TextReader Source { get; protected set; }
-        public bool IgnoreCase { get; set; } = true;
+        public bool IgnoreCase { get; set; }
         public bool AutoTrim { get; set; }
 
         public string TokenDelimiter
