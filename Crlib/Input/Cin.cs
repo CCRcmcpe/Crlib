@@ -22,7 +22,7 @@ namespace REVUnit.Crlib.Input
 
     public class Cin : TextScanner
     {
-        public Cin() : base(Console.In, Environment.NewLine)
+        public Cin(string? lineSeparator = null) : base(Console.In, lineSeparator ?? Environment.NewLine)
         {
         }
 
