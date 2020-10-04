@@ -9,6 +9,8 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XString
     {
+        public const int MaxLength = 1073741791;
+
         public static void Cl(this string? s)
         {
             Console.WriteLine(s);
