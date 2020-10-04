@@ -28,6 +28,7 @@ namespace REVUnit.Crlib.Input
 
         public bool WriteEnumDescription { get; set; }
         public bool ThrowOnInvalidInput { get; set; }
+        public bool ThrowOnUndefinedEnum { get; set; }
 
         public override T Get<T>()
         {
@@ -86,7 +87,7 @@ namespace REVUnit.Crlib.Input
                 if (type.IsEnum)
                 {
                     var parsed = (T) Enum.Parse(type, value, IgnoreCase);
-                    if (!Enum.IsDefined(type, parsed))
+                    if (ThrowOnUndefinedEnum && !Enum.IsDefined(type, parsed))
                         throw new Exception(string.Format(Resources.Cin_InputOutOfRange, type));
                     result = parsed;
                 }
