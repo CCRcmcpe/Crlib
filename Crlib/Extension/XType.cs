@@ -27,9 +27,6 @@ namespace REVUnit.Crlib.Extension
             return (T) Activator.CreateInstance(type, parameters)!;
         }
 
-        public static bool TypeIs(this Type a, Type b)
-        {
-            return b.IsAssignableFrom(a);
-        }
+        public static bool TypeIs(this Type a, Type b) => b.IsAssignableFrom(a);
     }
 }

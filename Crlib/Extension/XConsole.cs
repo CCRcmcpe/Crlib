@@ -39,15 +39,10 @@ namespace REVUnit.Crlib.Extension
             return (char) i;
         }
 
-        public static double[]? ReadDoublesLine()
-        {
-            return Console.ReadLine()?.Trim().Split(' ').Select(double.Parse).ToArray();
-        }
+        public static double[]? ReadDoublesLine() =>
+            Console.ReadLine()?.Trim().Split(' ').Select(double.Parse).ToArray();
 
-        public static int[]? ReadIntsLine()
-        {
-            return Console.ReadLine()?.Trim().Split(' ').Select(int.Parse).ToArray();
-        }
+        public static int[]? ReadIntsLine() => Console.ReadLine()?.Trim().Split(' ').Select(int.Parse).ToArray();
 
         public static string ReadLine(string hint)
         {

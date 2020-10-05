@@ -27,10 +27,8 @@ namespace REVUnit.Crlib.Extension
         }
 
         [return: MaybeNull]
-        public static T ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T>.Agent parser)
-        {
-            return parser(it, out T result) ? result : default;
-        }
+        public static T ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T>.Agent parser) =>
+            parser(it, out T result) ? result : default;
 
         public static void PopulateWithJson(this object obj, string json)
         {
@@ -44,10 +42,8 @@ namespace REVUnit.Crlib.Extension
             JsonConvert.PopulateObject(File.ReadAllText(filePath), obj);
         }
 
-        public static string SerializeToJson(this object obj, Formatting format = Formatting.Indented)
-        {
-            return JsonConvert.SerializeObject(obj, format);
-        }
+        public static string SerializeToJson(this object obj, Formatting format = Formatting.Indented) =>
+            JsonConvert.SerializeObject(obj, format);
 
         public static void SerializeToJsonFile(this object obj, string filePath,
             Formatting format = Formatting.Indented)

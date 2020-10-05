@@ -9,10 +9,7 @@ namespace REVUnit.Crlib
 
         private readonly Func<TSrc, T> _parser;
 
-        public TryParser(Func<TSrc, T> parser)
-        {
-            _parser = parser;
-        }
+        public TryParser(Func<TSrc, T> parser) => _parser = parser;
 
         public bool TryParse(TSrc value, [MaybeNullWhen(false)] out T result)
         {

@@ -34,10 +34,8 @@ namespace REVUnit.Crlib.Extension
         /// <summary>
         ///     此函数以 <paramref name="probability" /> 的概率返回 <c>true</c>，使用 <see cref="RandomNumberGenerator" /> 类。
         /// </summary>
-        public static bool HappensProbabilityS(float probability)
-        {
-            return HappensProbability(probability, RandomNumberGenerator.GetInt32);
-        }
+        public static bool HappensProbabilityS(float probability) =>
+            HappensProbability(probability, RandomNumberGenerator.GetInt32);
 
         /// <summary>
         ///     使用 <see cref="Stopwatch" /> 计量执行一次 <paramref name="action" /> 的时间。

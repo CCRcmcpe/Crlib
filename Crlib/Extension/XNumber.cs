@@ -6,15 +6,9 @@ namespace REVUnit.Crlib.Extension
 {
     public static class XNumber
     {
-        public static bool AtRange(this int i, int min, int max)
-        {
-            return i >= min && i <= max;
-        }
+        public static bool AtRange(this int i, int min, int max) => i >= min && i <= max;
 
-        public static string Based(this int i, int @base)
-        {
-            return Convert.ToString(i, @base);
-        }
+        public static string Based(this int i, int @base) => Convert.ToString(i, @base);
 
         public static int[] Digits(this int value)
         {
@@ -46,9 +40,6 @@ namespace REVUnit.Crlib.Extension
             return list.ToArray();
         }
 
-        public static bool InRange(this int i, int min, int max)
-        {
-            return i > min && i < max;
-        }
+        public static bool InRange(this int i, int min, int max) => i > min && i < max;
     }
 }

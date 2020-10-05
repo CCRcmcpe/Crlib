@@ -21,10 +21,7 @@ namespace REVUnit.Crlib.Extension
             foreach (T x in source) action(x);
         }
 
-        public static string GetLiteral<T>(this IEnumerable<T> objects)
-        {
-            return $"[{string.Join(", ", objects)}]";
-        }
+        public static string GetLiteral<T>(this IEnumerable<T> objects) => $"[{string.Join(", ", objects)}]";
 
         public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IList<T> list)
         {

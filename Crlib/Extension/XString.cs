@@ -29,28 +29,20 @@ namespace REVUnit.Crlib.Extension
         }
 
         public static IEnumerable<string> LazySplit(this string s, string separator,
-            RegexOptions options = RegexOptions.None)
-        {
-            return new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplit(s);
-        }
+            RegexOptions options = RegexOptions.None) =>
+            new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplit(s);
 
         public static IEnumerable<string> LazySplit(this string s, char separator,
-            RegexOptions options = RegexOptions.None)
-        {
-            return s.LazySplit(separator.ToString(CultureInfo.InvariantCulture), options);
-        }
+            RegexOptions options = RegexOptions.None) =>
+            s.LazySplit(separator.ToString(CultureInfo.InvariantCulture), options);
 
         public static IEnumerable<string> LazySplitNoEmptyEntries(this string s, string separator,
-            RegexOptions options = RegexOptions.None)
-        {
-            return new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplitNoEmptyEntries(s);
-        }
+            RegexOptions options = RegexOptions.None) =>
+            new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplitNoEmptyEntries(s);
 
         public static IEnumerable<string> LazySplitNoEmptyEntries(this string s, char separator,
-            RegexOptions options = RegexOptions.None)
-        {
-            return s.LazySplitNoEmptyEntries(separator.ToString(CultureInfo.InvariantCulture), options);
-        }
+            RegexOptions options = RegexOptions.None) =>
+            s.LazySplitNoEmptyEntries(separator.ToString(CultureInfo.InvariantCulture), options);
 
         public static int LevenshteinDistanceTo(this string s, string target)
         {
@@ -152,14 +144,8 @@ namespace REVUnit.Crlib.Extension
             }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static StringBuilder StringBuilder(this string? s)
-        {
-            return new StringBuilder(s);
-        }
+        public static StringBuilder StringBuilder(this string? s) => new StringBuilder(s);
 
-        public static byte[] ToBytes(this string s)
-        {
-            return Encoding.Default.GetBytes(s);
-        }
+        public static byte[] ToBytes(this string s) => Encoding.Default.GetBytes(s);
     }
 }

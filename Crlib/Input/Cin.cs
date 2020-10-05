@@ -10,10 +10,7 @@ namespace REVUnit.Crlib.Input
 {
     public class InvalidInputException : Exception
     {
-        public InvalidInputException(string? errorToken)
-        {
-            ErrorToken = errorToken;
-        }
+        public InvalidInputException(string? errorToken) => ErrorToken = errorToken;
 
         public string? ErrorToken { get; set; }
         public override string Message => string.Format(Resources.InvalidInputException_Message, ErrorToken);
@@ -31,16 +28,10 @@ namespace REVUnit.Crlib.Input
         public bool ThrowOnUndefinedEnum { get; set; }
 
         [return: MaybeNull]
-        public override T Get<T>()
-        {
-            return Get(null, Parse<T>);
-        }
+        public override T Get<T>() => Get(null, Parse<T>);
 
         [return: MaybeNull]
-        public T Get<T>(string? hint) where T : IConvertible
-        {
-            return Get(hint, Parse<T>);
-        }
+        public T Get<T>(string? hint) where T : IConvertible => Get(hint, Parse<T>);
 
         [return: MaybeNull]
         public T Get<T>(string? hint, Func<string, T> parser)
