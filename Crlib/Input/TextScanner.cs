@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Text;
 
@@ -35,6 +36,7 @@ namespace REVUnit.Crlib.Input
 
         public bool IsOnEof { get; protected set; }
 
+        [return: MaybeNull]
         public abstract T Get<T>() where T : IConvertible;
 
         protected string? NextToken()

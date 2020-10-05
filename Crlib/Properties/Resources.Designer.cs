@@ -79,7 +79,7 @@ namespace REVUnit.Crlib.Properties {
         }
         
         /// <summary>
-        ///   查找类似 Invalid input &quot;{0}&quot;. 的本地化字符串。
+        ///   查找类似 Invalid input &quot;{0}&quot;, message: {1}. 的本地化字符串。
         /// </summary>
         internal static string Cin_InvalidInput {
             get {
