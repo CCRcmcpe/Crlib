@@ -2,11 +2,17 @@
 
   <PropertyGroup>
     <TargetFrameworks>net5.0;net5.0-windows</TargetFrameworks>
-    <Company>REV Unit</Company>
     <RootNamespace>REVUnit.Crlib</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <LangVersion>9</LangVersion>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>Crlib</PackageId>
+    <Version>0.2.0</Version>
+    <Authors>Rcmcpe</Authors>
+    <Company>REV Unit</Company>
   </PropertyGroup>
 
   <ItemGroup>

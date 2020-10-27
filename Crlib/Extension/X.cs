@@ -124,7 +124,7 @@ namespace REVUnit.Crlib.Extension
         /// </summary>
         [return: MaybeNull]
         public static T While<T>(Func<T> function, Predicate<T> condiction,
-            TimeSpan cycleInterval)
+                                 TimeSpan cycleInterval)
         {
             if (function == null) throw new ArgumentNullException(nameof(function));
             if (condiction == null) throw new ArgumentNullException(nameof(condiction));
@@ -162,7 +162,7 @@ namespace REVUnit.Crlib.Extension
         /// </summary>
         [return: MaybeNull]
         public static T While<T>(Func<T> function, Predicate<T> condiction,
-            TimeSpan cycleInterval, int maxRetry)
+                                 TimeSpan cycleInterval, int maxRetry)
         {
             if (function == null) throw new ArgumentNullException(nameof(function));
             if (condiction == null) throw new ArgumentNullException(nameof(condiction));

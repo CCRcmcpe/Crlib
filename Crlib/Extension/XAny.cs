@@ -46,13 +46,10 @@ namespace REVUnit.Crlib.Extension
             JsonConvert.SerializeObject(obj, format);
 
         public static void SerializeToJsonFile(this object obj, string filePath,
-            Formatting format = Formatting.Indented)
+                                               Formatting format = Formatting.Indented)
         {
             using var jsonTextWriter = new JsonTextWriter(new StreamWriter(filePath, false, Encoding.Default));
-            new JsonSerializer
-            {
-                Formatting = format
-            }.Serialize(jsonTextWriter, obj);
+            new JsonSerializer { Formatting = format }.Serialize(jsonTextWriter, obj);
         }
     }
 }

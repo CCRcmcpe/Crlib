@@ -29,19 +29,19 @@ namespace REVUnit.Crlib.Extension
         }
 
         public static IEnumerable<string> LazySplit(this string s, string separator,
-            RegexOptions options = RegexOptions.None) =>
+                                                    RegexOptions options = RegexOptions.None) =>
             new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplit(s);
 
         public static IEnumerable<string> LazySplit(this string s, char separator,
-            RegexOptions options = RegexOptions.None) =>
+                                                    RegexOptions options = RegexOptions.None) =>
             s.LazySplit(separator.ToString(CultureInfo.InvariantCulture), options);
 
         public static IEnumerable<string> LazySplitNoEmptyEntries(this string s, string separator,
-            RegexOptions options = RegexOptions.None) =>
+                                                                  RegexOptions options = RegexOptions.None) =>
             new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplitNoEmptyEntries(s);
 
         public static IEnumerable<string> LazySplitNoEmptyEntries(this string s, char separator,
-            RegexOptions options = RegexOptions.None) =>
+                                                                  RegexOptions options = RegexOptions.None) =>
             s.LazySplitNoEmptyEntries(separator.ToString(CultureInfo.InvariantCulture), options);
 
         public static int LevenshteinDistanceTo(this string s, string target)
@@ -56,20 +56,16 @@ namespace REVUnit.Crlib.Extension
 
             if (length == 0) return length2;
             if (length2 == 0) return length;
-            for (var i = 0; i <= length; i = array[i][0] = i + 1)
-            {
-            }
+            for (var i = 0; i <= length; i = array[i][0] = i + 1) { }
 
-            for (var j = 0; j <= length2; j = array[0][j] = j + 1)
-            {
-            }
+            for (var j = 0; j <= length2; j = array[0][j] = j + 1) { }
 
             for (var k = 1; k <= length; k++)
             for (var l = 1; l <= length2; l++)
             {
                 int num = target[l - 1] == s[k - 1] ? 0 : 1;
                 array[k][l] = Math.Min(Math.Min(array[k - 1][l] + 1, array[k][l - 1] + 1),
-                    array[k - 1][l - 1] + num);
+                                       array[k - 1][l - 1] + num);
             }
 
             return array[length][length2];
@@ -87,14 +83,14 @@ namespace REVUnit.Crlib.Extension
         {
             var d = 0.0;
             return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => double.TryParse(m.Value, out d)).Select(m => d)
-                .ToArray();
+                        .ToArray();
         }
 
         public static float[] ScanFloats(this string s)
         {
             var d = 0f;
             return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => float.TryParse(m.Value, out d)).Select(m => d)
-                .ToArray();
+                        .ToArray();
         }
 
         public static int[] ScanInts(this string s)
@@ -120,28 +116,19 @@ namespace REVUnit.Crlib.Extension
         public static string[] Split(this string s, string separator)
         {
             if (s == null) throw new ArgumentNullException(nameof(s));
-            return s.Split(new[]
-            {
-                separator
-            }, StringSplitOptions.None);
+            return s.Split(new[] { separator }, StringSplitOptions.None);
         }
 
         public static string[] SplitNoEmptyEntries(this string s, string separator)
         {
             if (s == null) throw new ArgumentNullException(nameof(s));
-            return s.Split(new[]
-            {
-                separator
-            }, StringSplitOptions.RemoveEmptyEntries);
+            return s.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static string[] SplitNoEmptyEntries(this string s, char separator)
         {
             if (s == null) throw new ArgumentNullException(nameof(s));
-            return s.Split(new[]
-            {
-                separator
-            }, StringSplitOptions.RemoveEmptyEntries);
+            return s.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static StringBuilder StringBuilder(this string? s) => new StringBuilder(s);

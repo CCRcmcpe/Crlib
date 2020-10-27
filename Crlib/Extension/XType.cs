@@ -9,10 +9,12 @@ namespace REVUnit.Crlib.Extension
         public static Type? GetType(string typeName, bool ignoreCase = false, bool throwOnError = false)
         {
             Type? type = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .SelectMany(x => x.GetTypes())
-                .FirstOrDefault(t => t.Name.Equals(typeName,
-                    ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal));
+                                  .GetAssemblies()
+                                  .SelectMany(x => x.GetTypes())
+                                  .FirstOrDefault(t => t.Name.Equals(typeName,
+                                                                     ignoreCase
+                                                                         ? StringComparison.OrdinalIgnoreCase
+                                                                         : StringComparison.Ordinal));
             if (type != null) return type;
 
             if (throwOnError) throw new Exception("Type not found");

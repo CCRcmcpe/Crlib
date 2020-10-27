@@ -12,7 +12,7 @@ namespace REVUnit.Crlib.Extension
             (T) value.ToType(typeof(T), format);
 
         public static bool TryToType<T>(this IConvertible? value,
-            [MaybeNullWhen(false)] out T target, IFormatProvider? format = null)
+                                        [MaybeNullWhen(false)] out T target, IFormatProvider? format = null)
         {
             try
             {

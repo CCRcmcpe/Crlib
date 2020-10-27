@@ -41,10 +41,7 @@ namespace REVUnit.Crlib.Extension
             if (source == null) throw new ArgumentNullException(nameof(source));
             IEnumerable<T> enumerable = source as T[] ?? source.ToArray();
             T t = enumerable.First();
-            var list = new List<T>
-            {
-                t
-            };
+            var list = new List<T> { t };
             foreach (T item in enumerable.Skip(1))
             {
                 if (!condition(t, item))
@@ -77,7 +74,7 @@ namespace REVUnit.Crlib.Extension
         public static IEnumerable<T> SelectCanParse<TSrc, T>(this IEnumerable<TSrc> x, TryParser<TSrc, T>.Agent parser)
         {
             return x.Select(it => (success: parser(it, out T result), result)).Where(it => it.success)
-                .Select(it => it.result);
+                    .Select(it => it.result);
         }
 
         private static long Factorial(int n)

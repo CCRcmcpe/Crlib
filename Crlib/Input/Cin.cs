@@ -14,14 +14,12 @@ namespace REVUnit.Crlib.Input
 
         public string? ErrorToken { get; set; }
         public override string Message => string.Format(Resources.InvalidInputException_Message, ErrorToken);
-        public override IDictionary Data => new ListDictionary {{"ErrorToken", ErrorToken}};
+        public override IDictionary Data => new ListDictionary { { "ErrorToken", ErrorToken } };
     }
 
     public class Cin : TextScanner
     {
-        public Cin(string? lineSeparator = null) : base(Console.In, lineSeparator ?? Environment.NewLine)
-        {
-        }
+        public Cin(string? lineSeparator = null) : base(Console.In, lineSeparator ?? Environment.NewLine) { }
 
         public bool WriteEnumDescription { get; set; }
         public bool ThrowOnInvalidInput { get; set; }
@@ -66,8 +64,8 @@ namespace REVUnit.Crlib.Input
         private static string GetEnumDescription(Type enumType)
         {
             return enumType.GetEnumValues().Cast<IConvertible>()
-                .Select(it => it!.ToType(enumType.GetEnumUnderlyingType()))
-                .Select(it => $"[{it}]={enumType.GetEnumName(it)}").GetLiteral();
+                           .Select(it => it!.ToType(enumType.GetEnumUnderlyingType()))
+                           .Select(it => $"[{it}]={enumType.GetEnumName(it)}").GetLiteral();
         }
 
         private T Parse<T>(string value) where T : IConvertible
@@ -82,9 +80,7 @@ namespace REVUnit.Crlib.Input
                 ret = parsed;
             }
             else
-            {
                 ret = value.ToType<T>();
-            }
 
             return ret;
         }

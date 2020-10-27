@@ -7,9 +7,7 @@ namespace REVUnit.Crlib.Input
 {
     public class Scanner : TextScanner
     {
-        public Scanner(TextReader source) : base(source)
-        {
-        }
+        public Scanner(TextReader source) : base(source) { }
 
         public override T Get<T>()
         {
