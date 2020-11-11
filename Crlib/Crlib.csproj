@@ -5,7 +5,6 @@
     <RootNamespace>REVUnit.Crlib</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>
-    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -13,6 +12,10 @@
     <Version>0.2.0</Version>
     <Authors>Rcmcpe</Authors>
     <Company>REV Unit</Company>
+    <Copyright>(c) 2020 REV Unit</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/CCRcmcpe/Crlib.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
