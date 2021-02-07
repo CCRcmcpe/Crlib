@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Runtime.Versioning;
 using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Extension
@@ -49,20 +50,24 @@ namespace REVUnit.Crlib.Extension
             Console.Write(hint);
             return Console.ReadLine() ?? throw new IOException("Unexpected EOF");
         }
-#if WINDOWS
+
         static XConsole()
         {
-            if (!Native.SetConsoleCtrlHandler(_ =>
+            if (OperatingSystem.IsWindows() && !Native.SetConsoleCtrlHandler(_ =>
             {
+#pragma warning disable CA1416 // Validate platform compatibility
                 Exiting?.Invoke();
+#pragma warning restore CA1416 // Validate platform compatibility
                 return true;
             }, true))
+            {
                 throw new Exception("Unable to set ConsoleCtrlHandler");
+            }
         }
 
+        [SupportedOSPlatform("Windows")]
         public static IntPtr WindowHandle => Native.GetConsoleWindow();
 
-        public static event Action? Exiting;
-#endif
+        [SupportedOSPlatform("Windows")] public static event Action? Exiting;
     }
 }
