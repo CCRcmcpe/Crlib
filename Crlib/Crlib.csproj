@@ -9,10 +9,10 @@
 
   <PropertyGroup>
     <PackageId>Crlib</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>Rcmcpe</Authors>
     <Company>REV Unit</Company>
-    <Copyright>(c) 2020 REV Unit</Copyright>
+    <Copyright>(c) 2021 REV Unit</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/CCRcmcpe/Crlib.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

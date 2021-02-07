@@ -12,7 +12,7 @@ namespace REVUnit.Crlib
 
         private const BindingFlags TargetFlags = BindingFlags.DeclaredOnly | BindingFlags.Static | BindingFlags.Public;
 
-        private readonly List<CommandMethod> _commands = new List<CommandMethod>();
+        private readonly List<CommandMethod> _commands = new();
 
         public void AddCommand(IEnumerable<CommandMethod> commandDelegates)
         {

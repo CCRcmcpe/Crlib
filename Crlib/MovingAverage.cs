@@ -3,11 +3,11 @@ using System.Linq;
 
 namespace REVUnit.Crlib
 {
-    public class Averager
+    public class MovingAverage
     {
         private readonly Queue<decimal> _samples;
 
-        public Averager(int period)
+        public MovingAverage(int period)
         {
             Period = period;
             _samples = new Queue<decimal>(period);

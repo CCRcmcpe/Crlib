@@ -10,79 +10,95 @@ namespace REVUnit.Crlib.Input
 {
     public class InvalidInputException : Exception
     {
-        public InvalidInputException(string? errorToken) => ErrorToken = errorToken;
+        public InvalidInputException(string? faultedToken, string? message = null)
+        {
+            Message = message ?? string.Format(Resources.InvalidInputException_Message, FaultedToken);
+            FaultedToken = faultedToken;
+        }
 
-        public string? ErrorToken { get; set; }
-        public override string Message => string.Format(Resources.InvalidInputException_Message, ErrorToken);
-        public override IDictionary Data => new ListDictionary { { "ErrorToken", ErrorToken } };
+        public string? FaultedToken { get; set; }
+        public override string Message { get; }
+
+        public override IDictionary Data => new ListDictionary { { "FaultedToken", FaultedToken } };
     }
 
     public class Cin : TextScanner
     {
+        public delegate Exception? Parser<T>(string value, out T? result);
+
         public Cin(string? lineSeparator = null) : base(Console.In, lineSeparator ?? Environment.NewLine) { }
 
         public bool WriteEnumDescription { get; set; }
-        public bool ThrowOnInvalidInput { get; set; }
-        public bool ThrowOnUndefinedEnum { get; set; }
+        public bool ThrowOnUndefinedEnum { get; set; } = true;
+        public Exception? LastException { get; private set; }
 
         [return: MaybeNull]
-        public override T Get<T>() => Get(null, Parse<T>);
+        public override T Get<T>() => Get(null, (Parser<T>) TryParse);
 
-        [return: MaybeNull]
-        public T Get<T>(string? hint) where T : IConvertible => Get(hint, Parse<T>);
+        public T? Get<T>(string? hint) where T : IConvertible => Get(hint, (Parser<T>) TryParse);
 
-        [return: MaybeNull]
-        public T Get<T>(string? hint, Func<string, T> parser)
+        public T? Get<T>(string? hint, Parser<T> parser)
         {
             if (IsOnEof) return default;
+
             bool interactive = Environment.UserInteractive;
+
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
-            else if (!hint.EndsWith(": ")) hint += ": ";
+            else if (!hint.EndsWith(": "))
+                hint += ": ";
+
 
             Type type = typeof(T);
-            if (type.IsEnum && interactive && WriteEnumDescription) Console.WriteLine(GetEnumDescription(type));
+            if (type.IsEnum && interactive && WriteEnumDescription)
+            {
+                Console.WriteLine(GetEnumDescription(type));
+            }
 
             while (true)
             {
                 if (interactive) Console.Write(hint);
                 string? token = NextToken();
                 if (token == null) return default;
-                try
-                {
-                    return parser(token);
-                }
-                catch (Exception e)
-                {
-                    if (ThrowOnInvalidInput || !interactive) throw new InvalidInputException(token);
-                    Console.WriteLine(Resources.Cin_InvalidInput, token, e.Message);
-                    hint = Resources.Cin_EnterAgainHint;
-                }
+
+                LastException = parser(token, out T? result);
+                return LastException == null ? result : default;
             }
         }
 
         private static string GetEnumDescription(Type enumType)
         {
             return enumType.GetEnumValues().Cast<IConvertible>()
-                           .Select(it => it!.ToType(enumType.GetEnumUnderlyingType()))
-                           .Select(it => $"[{it}]={enumType.GetEnumName(it)}").GetLiteral();
+                           .Select(v => v.ToType(enumType.GetEnumUnderlyingType())!)
+                           .Select(v => $"[{v}]={enumType.GetEnumName(v)}").GetLiteral();
         }
 
-        private T Parse<T>(string value) where T : IConvertible
+        private Exception? TryParse<T>(string value, out T? result) where T : IConvertible
         {
-            T ret;
+            result = default;
             Type type = typeof(T);
-            if (type.IsEnum)
-            {
-                var parsed = (T) Enum.Parse(type, value, IgnoreCase);
-                if (ThrowOnUndefinedEnum && !Enum.IsDefined(type, parsed))
-                    throw new Exception(string.Format(Resources.Cin_InputOutOfRange, type));
-                ret = parsed;
-            }
-            else
-                ret = value.ToType<T>();
 
-            return ret;
+            try
+            {
+                if (!type.IsEnum)
+                {
+                    object? o = result.ToType(type);
+                    result = o != null ? (T?) o : default;
+                }
+
+                result = (T) Enum.Parse(type, value, IgnoreCase);
+            }
+            catch (Exception e)
+            {
+                return e;
+            }
+
+            if (ThrowOnUndefinedEnum && !Enum.IsDefined(type, result))
+            {
+                throw new InvalidInputException(string.Format(Resources.Cin_InputOutOfRange, type));
+            }
+
+            return null;
         }
     }
 }

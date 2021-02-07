@@ -131,7 +131,7 @@ namespace REVUnit.Crlib.Extension
             return s.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
-        public static StringBuilder StringBuilder(this string? s) => new StringBuilder(s);
+        public static StringBuilder StringBuilder(this string? s) => new(s);
 
         public static byte[] ToBytes(this string s) => Encoding.Default.GetBytes(s);
     }

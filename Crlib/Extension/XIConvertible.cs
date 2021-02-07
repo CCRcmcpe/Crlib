@@ -1,30 +1,30 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 namespace REVUnit.Crlib.Extension
 {
     public static class XIConvertible
     {
-        public static object ToType(this IConvertible value, Type targetType, IFormatProvider? format = null) =>
-            value.ToType(targetType, format);
+        public static object? ToType(this IConvertible? value, Type targetType, IFormatProvider? format = null) =>
+            value?.ToType(targetType, format);
 
-        public static T ToType<T>(this IConvertible value, IFormatProvider? format = null) =>
-            (T) value.ToType(typeof(T), format);
+        public static T? ToType<T>(this IConvertible? value, IFormatProvider? format = null)
+        {
+            object? o = value?.ToType(typeof(T), format);
+            return o != null ? (T) o : default;
+        }
 
-        public static bool TryToType<T>(this IConvertible? value,
-                                        [MaybeNullWhen(false)] out T target, IFormatProvider? format = null)
+        public static bool TryToType<T>(this IConvertible? value, out T? result, IFormatProvider? format = null)
         {
             try
             {
-                target = value!.ToType<T>(format);
+                result = value.ToType<T>();
+                return true;
             }
             catch
             {
-                target = default!;
+                result = default;
                 return false;
             }
-
-            return true;
         }
     }
 }
