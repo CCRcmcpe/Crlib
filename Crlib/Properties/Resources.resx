@@ -138,4 +138,10 @@
   <data name="InvalidInputException_Message" xml:space="preserve">
     <value>Invalid input encountered: "{0}"</value>
   </data>
+  <data name="XIList_Exception_ListEmpty" xml:space="preserve">
+    <value>List empty</value>
+  </data>
+  <data name="XPath_Exception_PathEmpty" xml:space="preserve">
+    <value>Path empty</value>
+  </data>
 </root>

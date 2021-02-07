@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
+using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Extension
 {
@@ -17,7 +17,7 @@ namespace REVUnit.Crlib.Extension
         public static bool AllEqual<T>(this IList<T> source, Func<T, T, bool> comparer)
         {
             int length = source.Count;
-            if (length == 0) throw new ArgumentException("The list must not be empty", nameof(source));
+            if (length == 0) throw new ArgumentException(Resources.XIList_Exception_ListEmpty, nameof(source));
             if (length == 1) return true;
             T prev = source[0];
             for (var i = 1; i < length; i++)
@@ -44,11 +44,10 @@ namespace REVUnit.Crlib.Extension
             for (var i = 0; i < list.Count; i++) list[i] = valueGenerator();
         }
 
-        [return: MaybeNull]
-        public static T ParallelFind<T>(this IList<T> list, Predicate<T> predicate)
+        public static T? ParallelFind<T>(this IList<T> list, Predicate<T> predicate)
         {
             if (list == null) throw new ArgumentNullException(nameof(list));
-            T result = default;
+            T? result = default;
             Parallel.For(0, list.Count - 1, (i, state) =>
             {
                 T t = list[i];
@@ -66,7 +65,7 @@ namespace REVUnit.Crlib.Extension
             if (list == null) throw new ArgumentNullException(nameof(list));
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             using var matches = new BlockingCollection<T>();
-            Parallel.For(0, list.Count - 1, (i, state) =>
+            Parallel.For(0, list.Count - 1, (i, _) =>
             {
                 T t = list[i];
                 // ReSharper disable once AccessToDisposedClosure

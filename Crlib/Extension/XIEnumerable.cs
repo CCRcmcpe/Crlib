@@ -55,7 +55,7 @@ namespace REVUnit.Crlib.Extension
             }
         }
 
-        public static double Median<T>(this IEnumerable<double> x)
+        public static double Median(this IEnumerable<double> x)
         {
             if (x == null) throw new ArgumentNullException(nameof(x));
             double[] data = x.OrderBy(n => n).ToArray();
@@ -73,8 +73,8 @@ namespace REVUnit.Crlib.Extension
 
         public static IEnumerable<T> SelectCanParse<TSrc, T>(this IEnumerable<TSrc> x, TryParser<TSrc, T>.Agent parser)
         {
-            return x.Select(it => (success: parser(it, out T result), result)).Where(it => it.success)
-                    .Select(it => it.result);
+            return x.Select(it => (success: parser(it, out T? result), result)).Where(it => it.success)
+                    .Select(it => it.result!);
         }
 
         private static long Factorial(int n)

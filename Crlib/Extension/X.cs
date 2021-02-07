@@ -122,13 +122,12 @@ namespace REVUnit.Crlib.Extension
         /// <summary>
         ///     求值 <paramref name="function" />，当 <paramref name="condiction" />为 <c>true</c> 时返回值，否则循环。
         /// </summary>
-        [return: MaybeNull]
-        public static T While<T>(Func<T> function, Predicate<T> condiction,
-                                 TimeSpan cycleInterval)
+        public static T? While<T>(Func<T> function, Predicate<T> condiction,
+                                  TimeSpan cycleInterval)
         {
             if (function == null) throw new ArgumentNullException(nameof(function));
             if (condiction == null) throw new ArgumentNullException(nameof(condiction));
-            T result = default;
+            T? result = default;
             while (true)
             {
                 TimeSpan time = Measure(() => result = function());
@@ -142,7 +141,6 @@ namespace REVUnit.Crlib.Extension
         ///     <paramref name="maxRetry" />
         ///     次后将抛出异常。
         /// </summary>
-        [return: MaybeNull]
         public static T While<T>(Func<T> function, Predicate<T> condiction, int maxRetry)
         {
             if (function == null) throw new ArgumentNullException(nameof(function));
@@ -160,14 +158,13 @@ namespace REVUnit.Crlib.Extension
         ///     求值 <paramref name="function" />，当 <paramref name="condiction" /> 为 <c>true</c> 时返回值，否则循环，每次循环会有
         ///     <paramref name="cycleInterval" /> 的间隔，当循环 <paramref name="maxRetry" /> 次后将抛出异常。
         /// </summary>
-        [return: MaybeNull]
-        public static T While<T>(Func<T> function, Predicate<T> condiction,
-                                 TimeSpan cycleInterval, int maxRetry)
+        public static T? While<T>(Func<T> function, Predicate<T> condiction,
+                                  TimeSpan cycleInterval, int maxRetry)
         {
             if (function == null) throw new ArgumentNullException(nameof(function));
             if (condiction == null) throw new ArgumentNullException(nameof(condiction));
             var retried = 0;
-            T result = default;
+            T? result = default;
             while (true)
             {
                 if (++retried == maxRetry) throw new Exception("Max retry reached");

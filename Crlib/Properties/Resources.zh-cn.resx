@@ -138,4 +138,10 @@
   <data name="InvalidInputException_Message" xml:space="preserve">
     <value>输入了无效的值: "{0}"</value>
   </data>
+  <data name="XIList_Exception_ListEmpty" xml:space="preserve">
+    <value>List 为空</value>
+  </data>
+  <data name="XPath_Exception_PathEmpty" xml:space="preserve">
+    <value>路径为空</value>
+  </data>
 </root>

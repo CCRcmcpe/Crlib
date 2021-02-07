@@ -1,6 +1,7 @@
 ﻿#if WINDOWS
 using System;
 using System.Runtime.InteropServices;
+
 #endif
 
 namespace REVUnit.Crlib
@@ -14,8 +15,8 @@ namespace REVUnit.Crlib
         public static extern IntPtr GetConsoleWindow();
 
         [DllImport("kernel32.dll")]
-        public static extern bool SetConsoleCtrlHandler(ConsoleCtrlHandler HandlerRoutine,
-            bool add);
+        public static extern bool SetConsoleCtrlHandler(ConsoleCtrlHandler handlerRoutine,
+                                                        bool add);
 #endif
     }
 }

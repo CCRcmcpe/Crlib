@@ -82,27 +82,27 @@ namespace REVUnit.Crlib.Extension
         public static double[] ScanDoubles(this string s)
         {
             var d = 0.0;
-            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => double.TryParse(m.Value, out d)).Select(m => d)
+            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => double.TryParse(m.Value, out d)).Select(_ => d)
                         .ToArray();
         }
 
         public static float[] ScanFloats(this string s)
         {
             var d = 0f;
-            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => float.TryParse(m.Value, out d)).Select(m => d)
+            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => float.TryParse(m.Value, out d)).Select(_ => d)
                         .ToArray();
         }
 
         public static int[] ScanInts(this string s)
         {
             var i = 0;
-            return Regex.Matches(s, @"-?\d+").Where(m => int.TryParse(m.Value, out i)).Select(m => i).ToArray();
+            return Regex.Matches(s, @"-?\d+").Where(m => int.TryParse(m.Value, out i)).Select(_ => i).ToArray();
         }
 
         public static uint[] ScanUints(this string s)
         {
             var i = 0u;
-            return Regex.Matches(s, @"\d+").Where(m => uint.TryParse(m.Value, out i)).Select(m => i).ToArray();
+            return Regex.Matches(s, @"\d+").Where(m => uint.TryParse(m.Value, out i)).Select(_ => i).ToArray();
         }
 
         public static double SimilarityTo(this string s, string target)

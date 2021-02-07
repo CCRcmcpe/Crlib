@@ -52,7 +52,7 @@ namespace REVUnit.Crlib.Extension
 #if WINDOWS
         static XConsole()
         {
-            if (!Native.SetConsoleCtrlHandler(ctrlType =>
+            if (!Native.SetConsoleCtrlHandler(_ =>
             {
                 Exiting?.Invoke();
                 return true;

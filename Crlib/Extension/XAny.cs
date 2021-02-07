@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -26,9 +25,8 @@ namespace REVUnit.Crlib.Extension
             Console.Write(obj);
         }
 
-        [return: MaybeNull]
-        public static T ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T>.Agent parser) =>
-            parser(it, out T result) ? result : default;
+        public static T? ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T>.Agent parser) =>
+            parser(it, out T? result) ? result : default;
 
         public static void PopulateWithJson(this object obj, string json)
         {
