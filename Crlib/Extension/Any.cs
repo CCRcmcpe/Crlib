@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XAny
+    public static class Any
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T Also<T>(this T it, Action<T> action)
@@ -15,14 +15,14 @@ namespace REVUnit.Crlib.Extension
             return it;
         }
 
-        public static void Cl(this object obj)
+        public static void WriteToConsole(this object obj)
         {
-            Console.WriteLine(obj);
+            System.Console.WriteLine(obj);
         }
 
-        public static void Cw(this object obj)
+        public static void WriteLineToConsole(this object obj)
         {
-            Console.Write(obj);
+            System.Console.Write(obj);
         }
 
         public static T? ParseOrDefault<TSrc, T>(this TSrc it, TryParser<TSrc, T>.Agent parser) =>
@@ -30,13 +30,11 @@ namespace REVUnit.Crlib.Extension
 
         public static void PopulateWithJson(this object obj, string json)
         {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
             JsonConvert.PopulateObject(json, obj);
         }
 
         public static void PopulateWithJsonFile(this object obj, string filePath)
         {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
             JsonConvert.PopulateObject(File.ReadAllText(filePath), obj);
         }
 

@@ -21,20 +21,17 @@ namespace REVUnit.Crlib
 
         public void AddCommand(IEnumerable<MethodInfo> methodInfos)
         {
-            if (methodInfos == null) throw new ArgumentNullException(nameof(methodInfos));
             _commands.AddRange(methodInfos.Select(m => (CommandMethod) m.CreateDelegate(typeof(CommandMethod))));
         }
 
         public void AddCommand(Type container)
         {
-            if (container == null) throw new ArgumentNullException(nameof(container));
             _commands.AddRange(container.GetMethods(TargetFlags)
                                         .Select(m => (CommandMethod) m.CreateDelegate(typeof(CommandMethod))));
         }
 
         public void AddCommand<TMethodAttribute>(Type container) where TMethodAttribute : Attribute
         {
-            if (container == null) throw new ArgumentNullException(nameof(container));
             _commands.AddRange(container.GetMethods(TargetFlags)
                                         .Where(m => m.GetCustomAttributes<TMethodAttribute>().Any())
                                         .Select(m => (CommandMethod) m.CreateDelegate(typeof(CommandMethod))));

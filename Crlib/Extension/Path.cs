@@ -4,7 +4,7 @@ using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XPath
+    public static class Path
     {
         public static bool IsDirectory(string path)
         {

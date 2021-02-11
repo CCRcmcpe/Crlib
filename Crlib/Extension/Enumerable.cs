@@ -4,16 +4,16 @@ using System.Linq;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XIEnumerable
+    public static class Enumerable
     {
         public static void Cl<T>(this IEnumerable<T> objects)
         {
-            objects.GetLiteral().Cl();
+            objects.GetLiteral().WriteToConsole();
         }
 
         public static void Cw<T>(this IEnumerable<T> objects)
         {
-            objects.GetLiteral().Cw();
+            objects.GetLiteral().WriteLineToConsole();
         }
 
         public static void Do<T>(this IEnumerable<T> source, Action<T> action)
@@ -25,8 +25,7 @@ namespace REVUnit.Crlib.Extension
 
         public static IEnumerable<IEnumerable<T>> GetPermutations<T>(this IList<T> list)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
-            long[] factorials = Enumerable.Range(0, list.Count + 1).Select(Factorial).ToArray();
+            long[] factorials = System.Linq.Enumerable.Range(0, list.Count + 1).Select(Factorial).ToArray();
             long num;
             for (var i = 0L; i < factorials[list.Count]; i = num)
             {
@@ -38,7 +37,6 @@ namespace REVUnit.Crlib.Extension
 
         public static IEnumerable<IEnumerable<T>> GroupWhile<T>(this IEnumerable<T> source, Func<T, T, bool> condition)
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
             IEnumerable<T> enumerable = source as T[] ?? source.ToArray();
             T t = enumerable.First();
             var list = new List<T> { t };
@@ -57,7 +55,6 @@ namespace REVUnit.Crlib.Extension
 
         public static double Median(this IEnumerable<double> x)
         {
-            if (x == null) throw new ArgumentNullException(nameof(x));
             double[] data = x.OrderBy(n => n).ToArray();
             if (data.Length == 0) throw new InvalidOperationException();
             return data.Length % 2 == 0
@@ -67,7 +64,6 @@ namespace REVUnit.Crlib.Extension
 
         public static T Mode<T>(this IEnumerable<T> x)
         {
-            if (x == null) throw new ArgumentNullException(nameof(x));
             return x.GroupBy(v => v).OrderByDescending(g => g.Count()).First().Key;
         }
 

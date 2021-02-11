@@ -4,7 +4,7 @@ using System.Numerics;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XNumber
+    public static class Numbers
     {
         public static bool AtRange(this int i, int min, int max) => i >= min && i <= max;
 

@@ -1,14 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XRegex
+    public static class Regex
     {
-        public static IEnumerable<Match> LazyMatch(this Regex regex, string input)
+        public static IEnumerable<Match> LazyMatch(this System.Text.RegularExpressions.Regex regex, string input)
         {
-            if (regex == null) throw new ArgumentNullException(nameof(regex));
             Match match = regex.Match(input);
             while (match.Success)
             {
@@ -17,9 +15,9 @@ namespace REVUnit.Crlib.Extension
             }
         }
 
-        public static IEnumerable<string> LazySplit(this Regex regex, string input, int startAt = 0)
+        public static IEnumerable<string> LazySplit(this System.Text.RegularExpressions.Regex regex, string input,
+                                                    int startAt = 0)
         {
-            if (regex == null) throw new ArgumentNullException(nameof(regex));
             int num = startAt;
             Match match = regex.Match(input);
             while (match.Success)
@@ -32,9 +30,9 @@ namespace REVUnit.Crlib.Extension
             yield return input.Substring(num);
         }
 
-        public static IEnumerable<string> LazySplitNoEmptyEntries(this Regex regex, string input, int startAt = 0)
+        public static IEnumerable<string> LazySplitNoEmptyEntries(this System.Text.RegularExpressions.Regex regex,
+                                                                  string input, int startAt = 0)
         {
-            if (regex == null) throw new ArgumentNullException(nameof(regex));
             int num = startAt;
             Match match = regex.Match(input);
             while (match.Success)

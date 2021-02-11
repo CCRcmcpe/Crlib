@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using REVUnit.Crlib.Extension;
 using REVUnit.Crlib.Input.Properties;
+using Console = System.Console;
 
 namespace REVUnit.Crlib.Input
 {

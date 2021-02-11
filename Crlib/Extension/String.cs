@@ -7,30 +7,30 @@ using System.Text.RegularExpressions;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XString
+    public static class String
     {
         public const int MaxLength = 1073741791;
 
-        public static void Cl(this string? s)
+        public static void WriteToConsole(this string? s)
         {
-            Console.WriteLine(s);
+            System.Console.WriteLine(s);
         }
 
-        public static void Cw(this string? s)
+        public static void WriteLineToConsole(this string? s)
         {
-            Console.Write(s);
+            System.Console.Write(s);
         }
 
         public static string FirstLetterUpper(this string s)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
             if (s.Length <= 1) return s.ToUpper(CultureInfo.InvariantCulture);
             return char.ToUpper(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
         }
 
         public static IEnumerable<string> LazySplit(this string s, string separator,
                                                     RegexOptions options = RegexOptions.None) =>
-            new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplit(s);
+            new System.Text.RegularExpressions.Regex(System.Text.RegularExpressions.Regex.Escape(separator),
+                                                     options | RegexOptions.Compiled).LazySplit(s);
 
         public static IEnumerable<string> LazySplit(this string s, char separator,
                                                     RegexOptions options = RegexOptions.None) =>
@@ -38,7 +38,8 @@ namespace REVUnit.Crlib.Extension
 
         public static IEnumerable<string> LazySplitNoEmptyEntries(this string s, string separator,
                                                                   RegexOptions options = RegexOptions.None) =>
-            new Regex(Regex.Escape(separator), options | RegexOptions.Compiled).LazySplitNoEmptyEntries(s);
+            new System.Text.RegularExpressions.Regex(System.Text.RegularExpressions.Regex.Escape(separator),
+                                                     options | RegexOptions.Compiled).LazySplitNoEmptyEntries(s);
 
         public static IEnumerable<string> LazySplitNoEmptyEntries(this string s, char separator,
                                                                   RegexOptions options = RegexOptions.None) =>
@@ -46,8 +47,6 @@ namespace REVUnit.Crlib.Extension
 
         public static int LevenshteinDistanceTo(this string s, string target)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
-            if (target == null) throw new ArgumentNullException(nameof(target));
             int length = s.Length;
             int length2 = target.Length;
 
@@ -73,7 +72,6 @@ namespace REVUnit.Crlib.Extension
 
         public static string Numeral(this string s, int system)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
             var stringBuilder = new StringBuilder();
             foreach (char value in s) stringBuilder.Append(Convert.ToString(value, system).PadLeft(8, '0'));
             return stringBuilder.ToString();
@@ -82,27 +80,31 @@ namespace REVUnit.Crlib.Extension
         public static double[] ScanDoubles(this string s)
         {
             var d = 0.0;
-            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => double.TryParse(m.Value, out d)).Select(_ => d)
-                        .ToArray();
+            return System.Text.RegularExpressions.Regex.Matches(s, @"-?\d+(\.\d+)?")
+                         .Where(m => double.TryParse(m.Value, out d)).Select(_ => d)
+                         .ToArray();
         }
 
         public static float[] ScanFloats(this string s)
         {
             var d = 0f;
-            return Regex.Matches(s, @"-?\d+(\.\d+)?").Where(m => float.TryParse(m.Value, out d)).Select(_ => d)
-                        .ToArray();
+            return System.Text.RegularExpressions.Regex.Matches(s, @"-?\d+(\.\d+)?")
+                         .Where(m => float.TryParse(m.Value, out d)).Select(_ => d)
+                         .ToArray();
         }
 
         public static int[] ScanInts(this string s)
         {
             var i = 0;
-            return Regex.Matches(s, @"-?\d+").Where(m => int.TryParse(m.Value, out i)).Select(_ => i).ToArray();
+            return System.Text.RegularExpressions.Regex.Matches(s, @"-?\d+").Where(m => int.TryParse(m.Value, out i))
+                         .Select(_ => i).ToArray();
         }
 
         public static uint[] ScanUints(this string s)
         {
             var i = 0u;
-            return Regex.Matches(s, @"\d+").Where(m => uint.TryParse(m.Value, out i)).Select(_ => i).ToArray();
+            return System.Text.RegularExpressions.Regex.Matches(s, @"\d+").Where(m => uint.TryParse(m.Value, out i))
+                         .Select(_ => i).ToArray();
         }
 
         public static double SimilarityTo(this string s, string target)
@@ -115,19 +117,16 @@ namespace REVUnit.Crlib.Extension
 
         public static string[] Split(this string s, string separator)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
             return s.Split(new[] { separator }, StringSplitOptions.None);
         }
 
         public static string[] SplitNoEmptyEntries(this string s, string separator)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
             return s.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         public static string[] SplitNoEmptyEntries(this string s, char separator)
         {
-            if (s == null) throw new ArgumentNullException(nameof(s));
             return s.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
 

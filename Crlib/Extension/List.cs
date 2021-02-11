@@ -6,11 +6,10 @@ using REVUnit.Crlib.Properties;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XIList
+    public static class List
     {
         public static bool AllEqual<T>(this IList<T> source) where T : IEquatable<T>
         {
-            if (source == null) throw new ArgumentNullException(nameof(source));
             return source.AllEqual((a, b) => !a.Equals(b));
         }
 
@@ -33,20 +32,16 @@ namespace REVUnit.Crlib.Extension
 
         public static void Fill<T>(this IList<T> list, T value)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
             for (var i = 0; i < list.Count; i++) list[i] = value;
         }
 
         public static void Fill<T>(this IList<T> list, Func<T> valueGenerator)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
-            if (valueGenerator == null) throw new ArgumentNullException(nameof(valueGenerator));
             for (var i = 0; i < list.Count; i++) list[i] = valueGenerator();
         }
 
         public static T? ParallelFind<T>(this IList<T> list, Predicate<T> predicate)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
             T? result = default;
             Parallel.For(0, list.Count - 1, (i, state) =>
             {
@@ -62,8 +57,6 @@ namespace REVUnit.Crlib.Extension
 
         public static T[] ParallelFindAll<T>(this IList<T> list, Predicate<T> predicate)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
-            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
             using var matches = new BlockingCollection<T>();
             Parallel.For(0, list.Count - 1, (i, _) =>
             {
@@ -78,9 +71,6 @@ namespace REVUnit.Crlib.Extension
 
         public static int ParallelFindIndex<T>(this IList<T> list, Predicate<T> predicate)
         {
-            if (list == null) throw new ArgumentNullException(nameof(list));
-            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
-            if (list == null) throw new ArgumentNullException(nameof(list));
             int index = -1;
             Parallel.For(0, list.Count - 1, (i, state) =>
             {

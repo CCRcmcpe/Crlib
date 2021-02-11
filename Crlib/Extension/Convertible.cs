@@ -2,7 +2,7 @@ using System;
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XIConvertible
+    public static class Convertible
     {
         public static object? ToType(this IConvertible? value, Type targetType, IFormatProvider? format = null) =>
             value?.ToType(targetType, format);

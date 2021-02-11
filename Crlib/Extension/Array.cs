@@ -2,7 +2,7 @@
 
 namespace REVUnit.Crlib.Extension
 {
-    public static class XArray
+    public static class Array
     {
         public static T[][] Create<T>(int dim0Len, int dim1Len)
         {
