@@ -83,8 +83,15 @@ namespace REVUnit.Crlib.Extension
         private static IEnumerable<T> GeneratePermutation<T>(IList<T> list, IReadOnlyList<int> sequence)
         {
             T[] array2 = list.ToArray();
-            for (var i = 0; i < array2.Length - 1; i++) X.Swap(ref array2[i], ref array2[i + sequence[i]]);
+            for (var i = 0; i < array2.Length - 1; i++) Swap(ref array2[i], ref array2[i + sequence[i]]);
             return array2;
+        }
+
+        private static void Swap<T>(ref T a, ref T b)
+        {
+            T temp = a;
+            a = b;
+            b = temp;
         }
 
         private static int[] GenerateSequence(long number, int size, IReadOnlyList<long> factorials)
