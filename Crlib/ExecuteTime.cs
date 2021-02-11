@@ -20,7 +20,7 @@ namespace REVUnit.Crlib
         /// <summary>
         ///     使用 <see cref="Stopwatch" /> 计量执行 <paramref name="avgTime" /> 次 <paramref name="action" /> 的平均时间。
         /// </summary>
-        public static TimeSpan MeasureAvg(Action action, int avgTime)
+        public static TimeSpan MeasureAverage(Action action, int avgTime)
         {
             if (avgTime < 1) throw new ArgumentOutOfRangeException(nameof(avgTime));
             var stopwatch = new Stopwatch();
