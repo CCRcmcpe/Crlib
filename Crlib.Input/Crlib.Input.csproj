@@ -8,13 +8,15 @@
 
   <PropertyGroup>
     <PackageId>Crlib.Input</PackageId>
-    <Version>0.2.1</Version>
+    <Version>$(GitBaseVersion)</Version>
     <Authors>Rcmcpe</Authors>
     <Company>REV Unit</Company>
     <Copyright>(c) 2021 REV Unit</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/CCRcmcpe/Crlib.Input.git</RepositoryUrl>
+    <RepositoryUrl>$(GitRepositoryUrl)</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <RepositoryBranch>$(GitBranch)</RepositoryBranch>
+    <RepositoryCommit>$(GitCommit)</RepositoryCommit>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,6 +25,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crlib\Crlib.csproj" />
+    <PackageReference Include="GitInfo" Version="2.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
