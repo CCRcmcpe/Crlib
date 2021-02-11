@@ -120,23 +120,14 @@
   <data name="Cin_InvalidInput" xml:space="preserve">
     <value>Invalid input "{0}", message: "{1}".</value>
   </data>
-  <data name="Cin_InputOutOfRange" xml:space="preserve">
-    <value>Input "{0}" is out of range.</value>
-  </data>
   <data name="Cin_EnterAgainHint" xml:space="preserve">
     <value>Enter again: </value>
-  </data>
-  <data name="Scanner_InvalidValue" xml:space="preserve">
-    <value>Invalid value "{0}".</value>
   </data>
   <data name="XConsole_AnyKey" xml:space="preserve">
     <value>Press any key to continue. . .</value>
   </data>
   <data name="XConsole_AnyKey_WithPrefix" xml:space="preserve">
     <value>, press any key to continue. . .</value>
-  </data>
-  <data name="InvalidInputException_Message" xml:space="preserve">
-    <value>Invalid input encountered: "{0}"</value>
   </data>
   <data name="XIList_Exception_ListEmpty" xml:space="preserve">
     <value>List empty</value>

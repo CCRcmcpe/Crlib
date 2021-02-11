@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace REVUnit.Crlib.Properties {
+namespace REVUnit.Crlib.Input.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace REVUnit.Crlib.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("REVUnit.Crlib.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("REVUnit.Crlib.Input.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,38 @@ namespace REVUnit.Crlib.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter again: .
+        ///   Looks up a localized string similar to Input &quot;{0}&quot; is out of range..
         /// </summary>
-        internal static string Cin_EnterAgainHint {
+        internal static string Cin_InputOutOfRange {
             get {
-                return ResourceManager.GetString("Cin_EnterAgainHint", resourceCulture);
+                return ResourceManager.GetString("Cin_InputOutOfRange", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid input &quot;{0}&quot;, message: &quot;{1}&quot;..
+        ///   Looks up a localized string similar to Invalid input encountered: &quot;{0}&quot;.
         /// </summary>
-        internal static string Cin_InvalidInput {
+        internal static string InvalidInputException_Message {
             get {
-                return ResourceManager.GetString("Cin_InvalidInput", resourceCulture);
+                return ResourceManager.GetString("InvalidInputException_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Press any key to continue. . ..
+        ///   Looks up a localized string similar to Invalid value &quot;{0}&quot;..
         /// </summary>
-        internal static string XConsole_AnyKey {
+        internal static string Scanner_InvalidValue {
             get {
-                return ResourceManager.GetString("XConsole_AnyKey", resourceCulture);
+                return ResourceManager.GetString("Scanner_InvalidValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to , press any key to continue. . ..
+        ///   Looks up a localized string similar to DelimiterRegex cannot be null or empty.
         /// </summary>
-        internal static string XConsole_AnyKey_WithPrefix {
+        internal static string TextScanner_Exception_DelimiterRegexNullOrEmpty {
             get {
-                return ResourceManager.GetString("XConsole_AnyKey_WithPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to List empty.
-        /// </summary>
-        internal static string XIList_Exception_ListEmpty {
-            get {
-                return ResourceManager.GetString("XIList_Exception_ListEmpty", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Path empty.
-        /// </summary>
-        internal static string XPath_Exception_PathEmpty {
-            get {
-                return ResourceManager.GetString("XPath_Exception_PathEmpty", resourceCulture);
+                return ResourceManager.GetString("TextScanner_Exception_DelimiterRegexNullOrEmpty", resourceCulture);
             }
         }
     }

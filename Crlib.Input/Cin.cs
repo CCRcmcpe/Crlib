@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using REVUnit.Crlib.Extension;
-using REVUnit.Crlib.Properties;
+using REVUnit.Crlib.Input.Properties;
 
 namespace REVUnit.Crlib.Input
 {
@@ -22,24 +21,21 @@ namespace REVUnit.Crlib.Input
         public override IDictionary Data => new ListDictionary { { "FaultedToken", FaultedToken } };
     }
 
-    public class Cin : TextScanner
+    public class Cin : Scanner
     {
         public delegate Exception? Parser<T>(string value, out T? result);
 
-        public Cin(string? lineSeparator = null) : base(Console.In, lineSeparator ?? Environment.NewLine) { }
+        public Cin() : base(Console.In, Environment.NewLine) { }
 
-        public bool WriteEnumDescription { get; set; }
+        public bool WriteEnumDescription { get; set; } = true;
         public bool ThrowOnUndefinedEnum { get; set; } = true;
         public Exception? LastException { get; private set; }
 
-        [return: MaybeNull]
-        public override T Get<T>() => Get(null, (Parser<T>) TryParse);
-
-        public T? Get<T>(string? hint) where T : IConvertible => Get(hint, (Parser<T>) TryParse);
+        public T? Get<T>(string? hint = null) where T : IConvertible => Get(hint, (Parser<T>) TryParse);
 
         public T? Get<T>(string? hint, Parser<T> parser)
         {
-            if (IsOnEof) return default;
+            if (Eof) return default;
 
             bool interactive = Environment.UserInteractive;
 
