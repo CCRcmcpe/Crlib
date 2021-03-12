@@ -17,9 +17,9 @@ namespace REVUnit.Crlib
 
         public int Period { get; }
 
-        public decimal CurrentMa => _samples.Count != 0 ? _samples.Average() : 0m;
+        public decimal CurrentMovingAverage => _samples.Count != 0 ? _samples.Average() : 0m;
 
-        public decimal CurrentWma
+        public decimal CurrentWeightedMovingAverage
         {
             get
             {

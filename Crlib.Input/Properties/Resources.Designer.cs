@@ -61,6 +61,15 @@ namespace REVUnit.Crlib.Input.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter again:.
+        /// </summary>
+        internal static string Cin_EnterAgainHint {
+            get {
+                return ResourceManager.GetString("Cin_EnterAgainHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input &quot;{0}&quot; is out of range..
         /// </summary>
         internal static string Cin_InputOutOfRange {
@@ -70,11 +79,20 @@ namespace REVUnit.Crlib.Input.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid input encountered: &quot;{0}&quot;.
+        ///   Looks up a localized string similar to Invalid input &quot;{0}&quot;, error message: &quot;{1}&quot;..
         /// </summary>
-        internal static string InvalidInputException_Message {
+        internal static string Cin_InvalidInput {
             get {
-                return ResourceManager.GetString("InvalidInputException_Message", resourceCulture);
+                return ResourceManager.GetString("Cin_InvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid token: &quot;{0}&quot;.
+        /// </summary>
+        internal static string InvalidTokenException_Message {
+            get {
+                return ResourceManager.GetString("InvalidTokenException_Message", resourceCulture);
             }
         }
         

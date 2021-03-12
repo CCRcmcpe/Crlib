@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-namespace REVUnit.Crlib.Extension
+namespace REVUnit.Crlib.Extensions
 {
     public static class Regex
     {

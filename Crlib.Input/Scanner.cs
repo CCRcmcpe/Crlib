@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using REVUnit.Crlib.Input.Properties;
 
 namespace REVUnit.Crlib.Input
 {
@@ -27,8 +26,7 @@ namespace REVUnit.Crlib.Input
             }
             catch
             {
-                Console.WriteLine(Resources.Scanner_InvalidValue, token);
-                throw;
+                throw new InvalidTokenException(token);
             }
         }
     }

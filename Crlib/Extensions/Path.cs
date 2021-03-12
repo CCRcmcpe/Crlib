@@ -1,15 +1,14 @@
 ﻿using System;
 using System.IO;
-using REVUnit.Crlib.Properties;
 
-namespace REVUnit.Crlib.Extension
+namespace REVUnit.Crlib.Extensions
 {
     public static class Path
     {
         public static bool IsDirectory(string path)
         {
             if (string.IsNullOrWhiteSpace(path))
-                throw new ArgumentException(Resources.XPath_Exception_PathEmpty, nameof(path));
+                throw new ArgumentOutOfRangeException(nameof(path));
             return File.GetAttributes(path).HasFlag(FileAttributes.Directory);
         }
     }

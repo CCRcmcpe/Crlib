@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
 
-namespace REVUnit.Crlib.Extension
+namespace REVUnit.Crlib.Extensions
 {
     public static class Random
     {

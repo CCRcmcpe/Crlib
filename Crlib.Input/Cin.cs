@@ -1,27 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.Linq;
-using REVUnit.Crlib.Extension;
+using REVUnit.Crlib.Extensions;
 using REVUnit.Crlib.Input.Properties;
 using Console = System.Console;
 
 namespace REVUnit.Crlib.Input
 {
-    public class InvalidInputException : Exception
-    {
-        public InvalidInputException(string? faultedToken, string? message = null)
-        {
-            Message = message ?? string.Format(Resources.InvalidInputException_Message, FaultedToken);
-            FaultedToken = faultedToken;
-        }
-
-        public string? FaultedToken { get; set; }
-        public override string Message { get; }
-
-        public override IDictionary Data => new ListDictionary { { "FaultedToken", FaultedToken } };
-    }
-
     public class Cin : Scanner
     {
         public delegate Exception? Parser<T>(string value, out T? result);
@@ -92,7 +76,7 @@ namespace REVUnit.Crlib.Input
 
             if (ThrowOnUndefinedEnum && !Enum.IsDefined(type, result))
             {
-                throw new InvalidInputException(string.Format(Resources.Cin_InputOutOfRange, type));
+                throw new InvalidTokenException(string.Format(Resources.Cin_InputOutOfRange, type));
             }
 
             return null;

@@ -18,14 +18,14 @@ namespace REVUnit.Crlib
         }
 
         /// <summary>
-        ///     使用 <see cref="Stopwatch" /> 计量执行 <paramref name="avgTime" /> 次 <paramref name="action" /> 的平均时间。
+        ///     使用 <see cref="Stopwatch" /> 计量执行 <paramref name="averageTimes" /> 次 <paramref name="action" /> 的平均时间。
         /// </summary>
-        public static TimeSpan MeasureAverage(Action action, int avgTime)
+        public static TimeSpan MeasureAverage(Action action, int averageTimes)
         {
-            if (avgTime < 1) throw new ArgumentOutOfRangeException(nameof(avgTime));
+            if (averageTimes < 1) throw new ArgumentOutOfRangeException(nameof(averageTimes));
             var stopwatch = new Stopwatch();
             TimeSpan time = TimeSpan.Zero;
-            for (var i = 0; i < avgTime; i++)
+            for (var i = 0; i < averageTimes; i++)
             {
                 stopwatch.Start();
                 action();
@@ -34,7 +34,7 @@ namespace REVUnit.Crlib
                 stopwatch.Reset();
             }
 
-            return time / avgTime;
+            return time / averageTimes;
         }
     }
 }

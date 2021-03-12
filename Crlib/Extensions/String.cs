@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace REVUnit.Crlib.Extension
+namespace REVUnit.Crlib.Extensions
 {
     public static class String
     {
@@ -23,8 +22,8 @@ namespace REVUnit.Crlib.Extension
 
         public static string FirstLetterUpper(this string s)
         {
-            if (s.Length <= 1) return s.ToUpper(CultureInfo.InvariantCulture);
-            return char.ToUpper(s[0], CultureInfo.InvariantCulture) + s.Substring(1);
+            if (s.Length <= 1) return s.ToUpper(CultureInfo.CurrentCulture);
+            return char.ToUpper(s[0], CultureInfo.CurrentCulture) + s.Substring(1);
         }
 
         public static IEnumerable<string> LazySplit(this string s, string separator,
@@ -70,43 +69,6 @@ namespace REVUnit.Crlib.Extension
             return array[length][length2];
         }
 
-        public static string Numeral(this string s, int system)
-        {
-            var stringBuilder = new StringBuilder();
-            foreach (char value in s) stringBuilder.Append(Convert.ToString(value, system).PadLeft(8, '0'));
-            return stringBuilder.ToString();
-        }
-
-        public static double[] ScanDoubles(this string s)
-        {
-            var d = 0.0;
-            return System.Text.RegularExpressions.Regex.Matches(s, @"-?\d+(\.\d+)?")
-                         .Where(m => double.TryParse(m.Value, out d)).Select(_ => d)
-                         .ToArray();
-        }
-
-        public static float[] ScanFloats(this string s)
-        {
-            var d = 0f;
-            return System.Text.RegularExpressions.Regex.Matches(s, @"-?\d+(\.\d+)?")
-                         .Where(m => float.TryParse(m.Value, out d)).Select(_ => d)
-                         .ToArray();
-        }
-
-        public static int[] ScanInts(this string s)
-        {
-            var i = 0;
-            return System.Text.RegularExpressions.Regex.Matches(s, @"-?\d+").Where(m => int.TryParse(m.Value, out i))
-                         .Select(_ => i).ToArray();
-        }
-
-        public static uint[] ScanUints(this string s)
-        {
-            var i = 0u;
-            return System.Text.RegularExpressions.Regex.Matches(s, @"\d+").Where(m => uint.TryParse(m.Value, out i))
-                         .Select(_ => i).ToArray();
-        }
-
         public static double SimilarityTo(this string s, string target)
         {
             if (s.Length == 0 || target.Length == 0) return 0.0;
@@ -129,8 +91,6 @@ namespace REVUnit.Crlib.Extension
         {
             return s.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
         }
-
-        public static StringBuilder StringBuilder(this string? s) => new(s);
 
         public static byte[] ToBytes(this string s) => Encoding.Default.GetBytes(s);
     }

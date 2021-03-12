@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace REVUnit.Crlib.Extension
+﻿namespace REVUnit.Crlib.Extensions
 {
     public static class Array
     {
@@ -12,9 +10,5 @@ namespace REVUnit.Crlib.Extension
 
             return array;
         }
-
-        public static T[] Of<T>(params T[] elements) => elements;
-
-        public static T[] With<T>(this T obj, params T[] elements) => elements.Prepend(obj).ToArray();
     }
 }

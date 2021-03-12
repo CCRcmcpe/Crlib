@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace REVUnit.Crlib.Extension
+namespace REVUnit.Crlib.Extensions
 {
     public static class Enumerable
     {
-        public static void Cl<T>(this IEnumerable<T> objects)
+        public static void WriteToConsole<T>(this IEnumerable<T> objects)
         {
             objects.GetLiteral().WriteToConsole();
         }
 
-        public static void Cw<T>(this IEnumerable<T> objects)
+        public static void WriteLineToConsole<T>(this IEnumerable<T> objects)
         {
             objects.GetLiteral().WriteLineToConsole();
         }
@@ -65,12 +65,6 @@ namespace REVUnit.Crlib.Extension
         public static T Mode<T>(this IEnumerable<T> x)
         {
             return x.GroupBy(v => v).OrderByDescending(g => g.Count()).First().Key;
-        }
-
-        public static IEnumerable<T> SelectCanParse<TSrc, T>(this IEnumerable<TSrc> x, TryParser<TSrc, T>.Agent parser)
-        {
-            return x.Select(it => (success: parser(it, out T? result), result)).Where(it => it.success)
-                    .Select(it => it.result!);
         }
 
         private static long Factorial(int n)

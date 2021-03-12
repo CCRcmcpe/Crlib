@@ -1,6 +1,6 @@
 using System;
 
-namespace REVUnit.Crlib.Extension
+namespace REVUnit.Crlib.Extensions
 {
     public static class Convertible
     {
