@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageId>Crlib.Input</PackageId>
-    <Version>0.2.1</Version>
+    <Version>1.0.0</Version>
     <Authors>Rcmcpe</Authors>
     <Company>REV Unit</Company>
     <Copyright>(c) 2021 REV Unit</Copyright>
