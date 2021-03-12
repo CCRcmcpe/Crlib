@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageId>Crlib</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Rcmcpe</Authors>
     <Company>REV Unit</Company>
     <Copyright>(c) 2021 REV Unit</Copyright>
@@ -20,10 +20,6 @@
 
   <ItemGroup>
     <None Remove="artifact\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
