@@ -20,15 +20,12 @@ namespace REVUnit.Crlib.Input
 
         public T? Get<T>(string? hint, Parser<T> parser)
         {
-            if (Eof) return default;
-
             bool interactive = Environment.UserInteractive;
 
             if (string.IsNullOrWhiteSpace(hint))
                 hint = string.Empty;
             else if (!hint.EndsWith(": "))
                 hint += ": ";
-
 
             Type type = typeof(T);
             if (type.IsEnum && interactive && WriteEnumDescription)

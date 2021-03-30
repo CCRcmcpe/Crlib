@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 
@@ -9,12 +8,6 @@ namespace REVUnit.Crlib.Extensions
     {
         private const string Kernel32 = "kernel32.dll";
         [SupportedOSPlatform("Windows")] public static IntPtr WindowHandle => GetConsoleWindow();
-
-        [SupportedOSPlatform("Windows")]
-        public static void AnyKey()
-        {
-            Process.Start("pause");
-        }
 
         [DllImport(Kernel32)]
         [SupportedOSPlatform("Windows")]
